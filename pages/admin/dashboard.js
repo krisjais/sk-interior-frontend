@@ -31,7 +31,7 @@ const Icon = {
   dashboard: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" strokeWidth="2"/><rect x="14" y="3" width="7" height="7" rx="1" strokeWidth="2"/><rect x="3" y="14" width="7" height="7" rx="1" strokeWidth="2"/><rect x="14" y="14" width="7" height="7" rx="1" strokeWidth="2"/></svg>,
   projects: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" strokeLinecap="round" d="M4 6h16M4 10h16M4 14h10"/></svg>,
   beforeafter: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" strokeLinecap="round" d="M8 3H5a2 2 0 00-2 2v14a2 2 0 002 2h3M16 3h3a2 2 0 012 2v14a2 2 0 01-2 2h-3M12 3v18"/></svg>,
-  hero: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" strokeWidth="2"/><path strokeWidth="2" strokeLinecap="round" d="M3 15l4-4 4 4 4-5 4 5"/></svg>,
+  testimonials: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>,
   bookings: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" strokeLinecap="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>,
   logout: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" strokeLinecap="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"/></svg>,
   plus: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" strokeLinecap="round" d="M12 4v16m8-8H4"/></svg>,
@@ -41,6 +41,7 @@ const Icon = {
   bell: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" strokeLinecap="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>,
   sun: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" strokeWidth="2"/><path strokeWidth="2" strokeLinecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/></svg>,
   eye: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>,
+  visits: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>,
   up: () => <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd"/></svg>,
 };
 
@@ -151,7 +152,7 @@ const inp = "w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm outl
 
 // ── Dashboard Overview ────────────────────────────────────────────────────
 function DashboardSection({ token, onNav }) {
-  const [counts, setCounts] = useState({ gallery: 0, ba: 0, hero: 0, bookings: 0 });
+  const [counts, setCounts] = useState({ gallery: 0, ba: 0, testimonials: 0, bookings: 0, visitors: 0 });
   const [categories, setCategories] = useState([]);
   const [bookings, setBookings] = useState([]);
 
@@ -160,10 +161,17 @@ function DashboardSection({ token, onNav }) {
     Promise.all([
       axios.get(`${API}/gallery`),
       axios.get(`${API}/before-after`),
-      axios.get(`${API}/hero`),
+      axios.get(`${API}/testimonials`),
       axios.get(`${API}/bookings`, authH(token)),
-    ]).then(([g, ba, h, b]) => {
-      setCounts({ gallery: g.data.length, ba: ba.data.length, hero: h.data.length, bookings: b.data.length });
+      axios.get(`${API}/visits`, authH(token)),
+    ]).then(([g, ba, t, b, v]) => {
+      setCounts({
+        gallery: g.data.length,
+        ba: ba.data.length,
+        testimonials: t.data.length,
+        bookings: b.data.length,
+        visitors: v.data.count
+      });
       setBookings(b.data.slice(0, 5));
       const cats = {};
       g.data.forEach(item => { cats[item.category] = (cats[item.category] || 0) + 1; });
@@ -184,11 +192,12 @@ function DashboardSection({ token, onNav }) {
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
         <StatCard icon={<Icon.projects />} label="Total Projects" value={counts.gallery} trend="+12%" />
         <StatCard icon={<Icon.bookings />} label="Total Bookings" value={counts.bookings} trend="+12%" />
         <StatCard icon={<Icon.eye />} label="Before & After" value={counts.ba} trend="+12%" />
-        <StatCard icon={<Icon.hero />} label="Hero Slides" value={counts.hero} trend="+12%" />
+        <StatCard icon={<Icon.testimonials />} label="Testimonials" value={counts.testimonials} trend="+15%" />
+        <StatCard icon={<Icon.visits />} label="Total Visitors" value={counts.visitors} trend="+18%" />
       </div>
 
       {/* Charts */}
@@ -341,7 +350,11 @@ function ProjectsSection({ token }) {
       {/* Grid */}
       {filtered.length === 0 ? (
         <div className="bg-white rounded-2xl border border-dashed border-gray-200 flex flex-col items-center justify-center py-20 text-gray-400">
-          <p className="text-4xl mb-3">🖼️</p>
+          <svg className="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+            <circle cx="9" cy="9" r="2"/>
+            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+          </svg>
           <p className="text-sm">No projects yet. Click "Add Project" to get started.</p>
         </div>
       ) : (
@@ -462,7 +475,13 @@ function BeforeAfterSection({ token }) {
 
       {items.length === 0 ? (
         <div className="bg-white rounded-2xl border border-dashed border-gray-200 flex flex-col items-center justify-center py-20 text-gray-400">
-          <p className="text-4xl mb-3">↔️</p><p className="text-sm">No transformations yet.</p>
+          <svg className="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2" />
+            <path d="M12 3v18" />
+            <path d="m8 8-4 4 4 4" />
+            <path d="m16 8 4 4-4 4" />
+          </svg>
+          <p className="text-sm">No transformations yet.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -518,40 +537,52 @@ function BeforeAfterSection({ token }) {
   );
 }
 
-// ── Hero Slides ───────────────────────────────────────────────────────────
-function HeroSection({ token }) {
-  const [slides, setSlides] = useState([]);
+// ── Testimonials ──────────────────────────────────────────────────────────
+function TestimonialsSection({ token }) {
+  const [items, setItems] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [editSlide, setEditSlide] = useState(null);
-  const [form, setForm] = useState({ alt: '', order: 0 });
-  const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [editItem, setEditItem] = useState(null);
+  const [form, setForm] = useState({ name: '', loc: '', rating: 5, text: '', order: 0 });
   const [saving, setSaving] = useState(false);
 
-  const load = async () => { const { data } = await axios.get(`${API}/hero`); setSlides(data); };
+  const load = async () => {
+    const { data } = await axios.get(`${API}/testimonials`);
+    setItems(data);
+  };
   useEffect(() => { if (token) load(); }, [token]);
 
-  const openCreate = () => { setEditSlide(null); setForm({ alt: '', order: 0 }); setFile(null); setPreview(null); setShowModal(true); };
-  const openEdit = (s) => { setEditSlide(s); setForm({ alt: s.alt, order: s.order || 0 }); setFile(null); setPreview(imgSrc(s.imageUrl)); setShowModal(true); };
+  const openCreate = () => {
+    setEditItem(null);
+    setForm({ name: '', loc: '', rating: 5, text: '', order: 0 });
+    setShowModal(true);
+  };
+  const openEdit = (item) => {
+    setEditItem(item);
+    setForm({ name: item.name, loc: item.loc, rating: item.rating, text: item.text, order: item.order || 0 });
+    setShowModal(true);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const fd = new FormData();
-    fd.append('alt', form.alt);
-    fd.append('order', form.order);
-    if (file) fd.append('image', file);
     try {
-      if (editSlide) await axios.put(`${API}/hero/${editSlide._id}`, fd, authH(token));
-      else { if (!file) { alert('Select an image'); setSaving(false); return; } await axios.post(`${API}/hero`, fd, authH(token)); }
-      setShowModal(false); load();
-    } catch (err) { alert(err.response?.data?.message || 'Error'); }
-    finally { setSaving(false); }
+      if (editItem) {
+        await axios.put(`${API}/testimonials/${editItem._id}`, form, authH(token));
+      } else {
+        await axios.post(`${API}/testimonials`, form, authH(token));
+      }
+      setShowModal(false);
+      load();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Error');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Delete slide?')) return;
-    await axios.delete(`${API}/hero/${id}`, authH(token));
+    if (!confirm('Delete testimonial?')) return;
+    await axios.delete(`${API}/testimonials/${id}`, authH(token));
     load();
   };
 
@@ -559,32 +590,38 @@ function HeroSection({ token }) {
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Hero Slides</h2>
-          <p className="text-gray-400 text-sm mt-0.5">Homepage background slideshow</p>
+          <h2 className="text-xl font-bold text-gray-900">Testimonials</h2>
+          <p className="text-gray-400 text-sm mt-0.5">Manage customer reviews shown on the homepage</p>
         </div>
         <button onClick={openCreate} className="flex items-center gap-2 bg-[#C8A96A] hover:bg-[#b8945a] text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors">
-          <Icon.plus /> Add Slide
+          <Icon.plus /> Add Testimonial
         </button>
       </div>
 
-      {slides.length === 0 ? (
+      {items.length === 0 ? (
         <div className="bg-white rounded-2xl border border-dashed border-gray-200 flex flex-col items-center justify-center py-20 text-gray-400">
-          <p className="text-4xl mb-3">🖼️</p><p className="text-sm">No custom slides. Default images are used.</p>
+          <svg className="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+            <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+          </svg>
+          <p className="text-sm">No testimonials yet. Click "Add Testimonial" to get started.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-          {slides.map(s => (
-            <div key={s._id} className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm group">
-              <div className="relative h-40 overflow-hidden">
-                <img src={imgSrc(s.imageUrl)} alt={s.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                  <button onClick={() => openEdit(s)} className="bg-white text-gray-700 hover:bg-[#C8A96A] hover:text-white p-2 rounded-lg transition-colors"><Icon.edit /></button>
-                  <button onClick={() => handleDelete(s._id)} className="bg-white text-red-500 hover:bg-red-500 hover:text-white p-2 rounded-lg transition-colors"><Icon.trash /></button>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {items.map(item => (
+            <div key={item._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col justify-between group relative">
+              <div>
+                <div className="flex text-[#C8A96A] text-sm mb-3">{'★'.repeat(item.rating)}</div>
+                <p className="text-gray-600 text-sm italic leading-relaxed">"{item.text}"</p>
               </div>
-              <div className="p-3">
-                <p className="text-sm font-medium text-gray-700 truncate">{s.alt || 'Slide'}</p>
-                <p className="text-xs text-gray-400">Order: {s.order}</p>
+              <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-50">
+                <div>
+                  <p className="font-semibold text-sm text-gray-800">{item.name}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">{item.loc}</p>
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={() => openEdit(item)} className="p-2 bg-gray-50 hover:bg-[#C8A96A]/10 text-gray-500 hover:text-[#C8A96A] rounded-lg transition-colors"><Icon.edit /></button>
+                  <button onClick={() => handleDelete(item._id)} className="p-2 bg-gray-50 hover:bg-red-50 text-gray-500 hover:text-red-500 rounded-lg transition-colors"><Icon.trash /></button>
+                </div>
               </div>
             </div>
           ))}
@@ -592,17 +629,32 @@ function HeroSection({ token }) {
       )}
 
       {showModal && (
-        <Modal title={editSlide ? 'Edit Slide' : 'Add Slide'} onClose={() => setShowModal(false)}>
+        <Modal title={editItem ? 'Edit Testimonial' : 'Add Testimonial'} onClose={() => setShowModal(false)}>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <Field label="Alt Text"><input className={inp} value={form.alt} onChange={e => setForm(p => ({...p, alt: e.target.value}))} placeholder="e.g. Luxury Living Room" /></Field>
-            <Field label="Order"><input type="number" className={inp} value={form.order} onChange={e => setForm(p => ({...p, order: +e.target.value}))} /></Field>
-            <Field label={editSlide ? 'Replace Image' : 'Image *'}>
-              <input type="file" accept="image/*" onChange={e => { setFile(e.target.files[0]); setPreview(URL.createObjectURL(e.target.files[0])); }} className={inp} />
-              {preview && <img src={preview} className="mt-2 h-32 w-full object-cover rounded-xl" />}
+            <Field label="Client Name *">
+              <input className={inp} required value={form.name} onChange={e => setForm(p => ({...p, name: e.target.value}))} placeholder="e.g. Priya Sharma" />
+            </Field>
+            <Field label="Location / Subtitle *">
+              <input className={inp} required value={form.loc} onChange={e => setForm(p => ({...p, loc: e.target.value}))} placeholder="e.g. Bandra, Mumbai" />
+            </Field>
+            <Field label="Rating *">
+              <select className={inp} required value={form.rating} onChange={e => setForm(p => ({...p, rating: +e.target.value}))}>
+                {[5,4,3,2,1].map(r => <option key={r} value={r}>{r} Stars</option>)}
+              </select>
+            </Field>
+            <Field label="Review Text *">
+              <textarea className={inp + ' resize-none'} required rows={4} value={form.text} onChange={e => setForm(p => ({...p, text: e.target.value}))} placeholder="Write review text here..." />
+            </Field>
+            <Field label="Display Order">
+              <input type="number" className={inp} value={form.order} onChange={e => setForm(p => ({...p, order: +e.target.value}))} />
             </Field>
             <div className="flex gap-3 pt-2">
-              <button type="submit" disabled={saving} className="flex-1 bg-[#C8A96A] hover:bg-[#b8945a] text-white font-medium py-2.5 rounded-xl transition-colors disabled:opacity-60">{saving ? 'Saving...' : 'Save'}</button>
-              <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 rounded-xl transition-colors">Cancel</button>
+              <button type="submit" disabled={saving} className="flex-1 bg-[#C8A96A] hover:bg-[#b8945a] text-white font-medium py-2.5 rounded-xl transition-colors disabled:opacity-60">
+                {saving ? 'Saving...' : 'Save'}
+              </button>
+              <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 rounded-xl transition-colors">
+                Cancel
+              </button>
             </div>
           </form>
         </Modal>
@@ -661,7 +713,15 @@ function BookingsSection({ token }) {
         <div className="flex justify-center py-20"><div className="w-8 h-8 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin"></div></div>
       ) : filtered.length === 0 ? (
         <div className="bg-white rounded-2xl border border-dashed border-gray-200 flex flex-col items-center justify-center py-20 text-gray-400">
-          <p className="text-4xl mb-3">📋</p><p className="text-sm">No bookings found.</p>
+          <svg className="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="16" height="18" x="4" y="4" rx="2" />
+            <path d="M9 22h6" />
+            <path d="M8 2v4" />
+            <path d="M16 2v4" />
+            <path d="M8 11h8" />
+            <path d="M8 16h5" />
+          </svg>
+          <p className="text-sm">No bookings found.</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -708,12 +768,12 @@ function Sidebar({ active, setActive, onLogout }) {
     { id: 'dashboard', label: 'Dashboard', icon: <Icon.dashboard /> },
     { id: 'projects', label: 'Projects', icon: <Icon.projects /> },
     { id: 'before-after', label: 'Before & After', icon: <Icon.beforeafter /> },
-    { id: 'hero', label: 'Hero Slides', icon: <Icon.hero /> },
+    { id: 'testimonials', label: 'Testimonials', icon: <Icon.testimonials /> },
     { id: 'bookings', label: 'Bookings', icon: <Icon.bookings /> },
   ];
 
   return (
-    <aside className="w-[200px] min-h-screen bg-white border-r border-gray-100 flex flex-col">
+    <aside className="w-[200px] h-screen bg-white border-r border-gray-100 flex flex-col">
       {/* Logo */}
       <div className="px-5 py-6 border-b border-gray-50">
         <div className="flex items-center gap-3">
@@ -728,7 +788,7 @@ function Sidebar({ active, setActive, onLogout }) {
       </div>
 
       {/* Nav */}
-      <div className="flex-1 py-4 px-3">
+      <div className="flex-1 py-4 px-3 overflow-y-auto">
         <p className="text-[10px] font-semibold text-gray-300 uppercase tracking-widest px-2 mb-3">Menu</p>
         {nav.map(n => (
           <button key={n.id} onClick={() => setActive(n.id)}
@@ -763,14 +823,14 @@ export default function Dashboard() {
 
   if (!token) return null;
 
-  const sectionTitles = { dashboard: 'Dashboard', projects: 'Projects', 'before-after': 'Before & After', hero: 'Hero Slides', bookings: 'Bookings' };
+  const sectionTitles = { dashboard: 'Dashboard', projects: 'Projects', 'before-after': 'Before & After', testimonials: 'Testimonials', bookings: 'Bookings' };
 
   const renderSection = () => {
     switch (active) {
       case 'dashboard': return <DashboardSection token={token} onNav={setActive} />;
       case 'projects': return <ProjectsSection token={token} />;
       case 'before-after': return <BeforeAfterSection token={token} />;
-      case 'hero': return <HeroSection token={token} />;
+      case 'testimonials': return <TestimonialsSection token={token} />;
       case 'bookings': return <BookingsSection token={token} />;
       default: return null;
     }
@@ -782,7 +842,7 @@ export default function Dashboard() {
       <div className="flex min-h-screen bg-[#f7f7f8]" style={{fontFamily:"'Poppins',sans-serif"}}>
 
         {/* Desktop sidebar */}
-        <div className="hidden lg:flex">
+        <div className="hidden lg:flex sticky top-0 h-screen">
           <Sidebar active={active} setActive={setActive} onLogout={handleLogout} />
         </div>
 

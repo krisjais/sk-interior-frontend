@@ -6,12 +6,82 @@ const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
 
 const SERVICES = [
-  { icon: '🛋️', title: 'Living Room Design', desc: 'Curated living spaces that blend comfort with sophistication.' },
-  { icon: '🍳', title: 'Modular Kitchen', desc: 'Functional and stunning kitchens designed for modern living.' },
-  { icon: '🛏️', title: 'Bedroom Design', desc: 'Serene bedroom retreats crafted for ultimate relaxation.' },
-  { icon: '🏢', title: 'Office Interiors', desc: 'Productive and inspiring workspaces for growing businesses.' },
-  { icon: '🏡', title: 'Residential Design', desc: 'Complete home transformations from concept to completion.' },
-  { icon: '🏗️', title: 'Renovation', desc: 'Breathe new life into existing spaces with expert renovation.' },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3" />
+        <path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+        <path d="M4 18v2" />
+        <path d="M20 18v2" />
+        <path d="M12 4v9" />
+      </svg>
+    ),
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
+    title: 'Living Room Design',
+    desc: 'Curated living spaces that blend comfort with sophistication.'
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 12h20" />
+        <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8" />
+        <path d="M4 8h16a2 2 0 0 1 2 2v2H2v-2a2 2 0 0 1 2-2Z" />
+        <path d="M9 3h6" />
+        <path d="M12 3v5" />
+      </svg>
+    ),
+    image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80',
+    title: 'Modular Kitchen',
+    desc: 'Functional and stunning kitchens designed for modern living.'
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 20V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12" />
+        <path d="M2 10h20" />
+        <path d="M2 14h20" />
+        <path d="M6 6v4" />
+        <path d="M18 6v4" />
+        <path d="M12 10v4" />
+      </svg>
+    ),
+    image: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=800&q=80',
+    title: 'Bedroom Design',
+    desc: 'Serene bedroom retreats crafted for ultimate relaxation.'
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        <rect width="20" height="14" x="2" y="6" rx="2" />
+      </svg>
+    ),
+    image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80',
+    title: 'Office Interiors',
+    desc: 'Productive and inspiring workspaces for growing businesses.'
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+    ),
+    image: 'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=800&q=80',
+    title: 'Residential Design',
+    desc: 'Complete home transformations from concept to completion.'
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M18.37 2.63 14 7H4a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1.25c1.52 0 2.75 1.23 2.75 2.75V20a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V10l4.37-4.37a2.12 2.12 0 1 0-3-3Z" />
+        <path d="M9 8c-1.5 0-3 .5-4 1.5M9 13c-1.5 0-3 .5-4 1.5" />
+      </svg>
+    ),
+    image: 'https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=800&q=80',
+    title: 'Renovation',
+    desc: 'Breathe new life into existing spaces with expert renovation.'
+  },
 ];
 
 const FAQS = [
@@ -22,12 +92,42 @@ const FAQS = [
   { q: 'Do you offer post-completion support?', a: 'Absolutely. We provide a warranty on workmanship and offer continued support post-handover for any touch-ups or concerns.' },
 ];
 
-const TESTIMONIALS = [
+const DEFAULT_TESTIMONIALS = [
   { name: 'Priya Sharma', loc: 'Bandra, Mumbai', rating: 5, text: 'SK Interior transformed our 3BHK into a breathtaking home. The attention to detail and quality of work is unmatched. Highly recommend!' },
   { name: 'Rahul Mehta', loc: 'Juhu, Mumbai', rating: 5, text: 'Professional team, timely delivery, and the end result exceeded our expectations. Our modular kitchen is the highlight of our home now.' },
   { name: 'Anita Desai', loc: 'Powai, Mumbai', rating: 5, text: 'From concept to completion, SK Interior made the entire process seamless. Our office looks absolutely stunning.' },
   { name: 'Vikram Nair', loc: 'Pali Hill, Mumbai', rating: 5, text: 'Outstanding craftsmanship and impeccable taste. They understood our vision perfectly and delivered a luxury villa interior.' },
 ];
+
+const ABOUT_ICONS = {
+  gem: (
+    <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 3h12l4 6-10 13L2 9Z" />
+      <path d="M11 3 8 9l4 13 4-13-3-6" />
+      <path d="M2 9h20" />
+    </svg>
+  ),
+  clock: (
+    <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
+  ),
+  palette: (
+    <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.35443 19.5126 5.51816 20.2504 5.25973 20.8966C5.0183 21.4995 5.38573 22 6.03456 22H12Z" />
+      <circle cx="7.5" cy="10.5" r="1" />
+      <circle cx="11.5" cy="7.5" r="1" />
+      <circle cx="16.5" cy="9.5" r="1" />
+      <circle cx="15.5" cy="14.5" r="1" />
+    </svg>
+  ),
+  heart: (
+    <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+    </svg>
+  )
+};
 
 function BeforeAfterCard({ item }) {
   const [pos, setPos] = useState(50);
@@ -130,6 +230,7 @@ export default function Home() {
   const [heroSlides, setHeroSlides] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [beforeAfter, setBeforeAfter] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
   const [filter, setFilter] = useState('all');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -178,6 +279,8 @@ export default function Home() {
     axios.get(`${API}/hero`).then(r => setHeroSlides(r.data.length ? r.data : DEFAULT_SLIDES)).catch(() => setHeroSlides(DEFAULT_SLIDES));
     axios.get(`${API}/gallery`).then(r => setGallery(r.data)).catch(() => setGallery([]));
     axios.get(`${API}/before-after`).then(r => setBeforeAfter(r.data)).catch(() => setBeforeAfter([]));
+    axios.get(`${API}/testimonials`).then(r => setTestimonials(r.data.length ? r.data : DEFAULT_TESTIMONIALS)).catch(() => setTestimonials(DEFAULT_TESTIMONIALS));
+    axios.post(`${API}/visits/increment`).catch(() => {});
 
     // Nav scroll
     const handleScroll = () => setNavScrolled(window.scrollY > 50);
@@ -415,8 +518,8 @@ export default function Home() {
               <div className="grid grid-cols-2 gap-6 mt-10">
                 {[['gem','Premium Quality','Finest materials & finishes'],['clock','On-Time Delivery','Strict timeline adherence'],['palette','Custom Design','Tailored to your vision'],['heart','Client First','4.9★ rated by 36+ clients']].map(([icon, title, sub]) => (
                   <div key={title} className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[#C8A96A]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-[#C8A96A] text-base">⭐</span>
+                    <div className="w-10 h-10 rounded-full bg-[#C8A96A]/10 flex items-center justify-center flex-shrink-0 mt-0.5 text-[#C8A96A]">
+                      {ABOUT_ICONS[icon]}
                     </div>
                     <div>
                       <h4 className="text-sm font-medium">{title}</h4>
@@ -457,13 +560,15 @@ export default function Home() {
             {SERVICES.map((s) => (
               <div key={s.title} className="service-card bg-white rounded-2xl overflow-hidden shadow-sm border border-black/5">
                 <div className="relative overflow-hidden h-56">
-                  <img src={`https://picsum.photos/seed/${s.title.replace(/ /g,'')}/600/400`} alt={s.title} className="service-img w-full h-full object-cover" loading="lazy" />
+                  <img src={s.image} alt={s.title} className="service-img w-full h-full object-cover" loading="lazy" />
                   <div className="service-overlay absolute inset-0 bg-[#C8A96A]/20 backdrop-blur-sm flex items-center justify-center">
                     <span className="text-[#121212] text-[11px] tracking-[0.3em] uppercase font-bold">Explore</span>
                   </div>
                 </div>
                 <div className="p-6">
-                  <div className="text-2xl mb-3">{s.icon}</div>
+                  <div className="w-12 h-12 rounded-xl bg-[#C8A96A]/10 flex items-center justify-center text-[#C8A96A] mb-5">
+                    {s.icon}
+                  </div>
                   <h3 className="font-medium text-lg">{s.title}</h3>
                   <p className="text-[#121212]/50 text-sm mt-2 leading-relaxed">{s.desc}</p>
                 </div>
@@ -558,8 +663,8 @@ export default function Home() {
             <h2 style={{fontFamily:"'Playfair Display',serif"}} className="text-3xl lg:text-5xl font-medium leading-[1.15] mt-4">What Our Clients <span className="italic text-[#C8A96A]">Say</span></h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
-            {TESTIMONIALS.map(t => (
-              <div key={t.name} className="bg-white rounded-2xl p-6 shadow-sm border border-black/5 hover:shadow-md transition-all">
+            {testimonials.map((t, idx) => (
+              <div key={t._id || idx} className="bg-white rounded-2xl p-6 shadow-sm border border-black/5 hover:shadow-md transition-all">
                 <div className="flex text-[#C8A96A] text-sm mb-4">{'★'.repeat(t.rating)}</div>
                 <p className="text-[#121212]/70 text-sm leading-relaxed">"{t.text}"</p>
                 <div className="mt-4 pt-4 border-t border-black/5">
@@ -661,7 +766,11 @@ export default function Home() {
                 </form>
               ) : (
                 <div className="bg-[#2A2A2A] rounded-2xl p-12 border border-white/5 text-center">
-                  <div className="text-5xl mb-4">✅</div>
+                  <div className="w-16 h-16 bg-[#C8A96A]/10 text-[#C8A96A] rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </div>
                   <h3 style={{fontFamily:"'Playfair Display',serif"}} className="text-2xl text-white mt-6">Thank You!</h3>
                   <p className="text-white/40 text-sm mt-3 font-light">Your consultation request has been received. Our design expert will contact you within 24 hours.</p>
                 </div>
@@ -678,8 +787,8 @@ export default function Home() {
           <h2 style={{fontFamily:"'Playfair Display',serif"}} className="text-3xl lg:text-5xl xl:text-6xl font-medium leading-[1.15] mt-6">Let's Create Something<br/><span className="italic text-[#C8A96A]">Extraordinary Together</span></h2>
           <p className="text-[#121212]/60 text-[15px] leading-relaxed mt-6 font-light max-w-xl mx-auto">Your dream space is just a conversation away. Reach out today and let our experts guide you.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
-            <a href="tel:09167401020" className="magnetic-btn bg-[#121212] text-white text-[11px] tracking-[0.3em] uppercase px-10 py-4 rounded-full font-medium"><span>Call 091674 01020</span></a>
-            <a href="https://wa.me/919167401020?text=Hi%20SK%20Interior%2C%20I%27m%20interested%20in%20your%20services." target="_blank" rel="noopener noreferrer" className="magnetic-btn border-2 border-[#121212] text-[#121212] text-[11px] tracking-[0.3em] uppercase px-10 py-4 rounded-full font-medium"><span>WhatsApp Us</span></a>
+            <a href="tel:9870760240" className="magnetic-btn bg-[#121212] text-white text-[11px] tracking-[0.3em] uppercase px-10 py-4 rounded-full font-medium"><span>Call 98707 60240</span></a>
+            <a href="https://wa.me/919870760240?text=Hi%20SK%20Interior%2C%20I%27m%20interested%20in%20your%20services." target="_blank" rel="noopener noreferrer" className="magnetic-btn border-2 border-[#121212] text-[#121212] text-[11px] tracking-[0.3em] uppercase px-10 py-4 rounded-full font-medium"><span>WhatsApp Us</span></a>
           </div>
         </div>
       </section>
@@ -713,7 +822,7 @@ export default function Home() {
               <h4 className="text-[11px] tracking-[0.3em] uppercase text-[#C8A96A] font-medium mb-6">Contact</h4>
               <div className="space-y-4 text-white/40 text-sm">
                 <p>25-B, New Kantwadi Rd, Pali Hill, Mumbai 400050</p>
-                <p><a href="tel:09167401020" className="hover:text-[#C8A96A] transition-colors">091674 01020</a></p>
+                <p><a href="tel:9870760240" className="hover:text-[#C8A96A] transition-colors">98707 60240</a></p>
                 <p><a href="mailto:hello@skinterior.in" className="hover:text-[#C8A96A] transition-colors">hello@skinterior.in</a></p>
                 <p>Mon–Sat: 10am – 7pm</p>
               </div>
