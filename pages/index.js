@@ -185,7 +185,7 @@ function BeforeAfterCard({ item }) {
   );
 }
 
-function PortfolioCard({ item }) {
+function PortfolioCard({ item, onOpen }) {
   const [hovered, setHovered] = useState(false);
   const src = item.imageUrl.startsWith('/uploads')
     ? `${BACKEND}${item.imageUrl}`
@@ -194,7 +194,8 @@ function PortfolioCard({ item }) {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ position: 'relative', borderRadius: '1rem', overflow: 'hidden', height: '288px', cursor: 'pointer' }}
+      onClick={() => onOpen && onOpen({ src, title: item.title, category: item.category })}
+      style={{ position: 'relative', borderRadius: '1rem', overflow: 'hidden', height: '288px', cursor: 'zoom-in' }}
     >
       <img
         src={src}
@@ -206,7 +207,27 @@ function PortfolioCard({ item }) {
           transition: 'transform 0.8s cubic-bezier(0.23,1,0.32,1)',
         }}
       />
-      {/* Always-visible subtle gradient at bottom */}
+      {/* Hover overlay */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'rgba(0,0,0,0.25)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        opacity: hovered ? 1 : 0,
+        transition: 'opacity 0.3s ease',
+      }}>
+        <div style={{
+          width: '48px', height: '48px', borderRadius: '50%',
+          background: 'rgba(200,169,106,0.9)', backdropFilter: 'blur(8px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          transform: hovered ? 'scale(1)' : 'scale(0.7)',
+          transition: 'transform 0.3s cubic-bezier(0.23,1,0.32,1)',
+        }}>
+          <svg width="20" height="20" fill="none" stroke="#121212" strokeWidth="2" viewBox="0 0 24 24">
+            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      {/* Bottom gradient info */}
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0,
         background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)',
@@ -226,6 +247,94 @@ function PortfolioCard({ item }) {
   );
 }
 
+function ImageModal({ image, onClose }) {
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
+  if (!image) return null;
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 99999,
+        background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(12px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '24px',
+        animation: 'fadeIn 0.25s ease',
+      }}
+    >
+      <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}} @keyframes scaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}`}</style>
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        style={{
+          position: 'absolute', top: '20px', right: '20px',
+          width: '44px', height: '44px', borderRadius: '50%',
+          background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+          color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          backdropFilter: 'blur(8px)', transition: 'background 0.2s',
+          zIndex: 100000,
+        }}
+        onMouseEnter={e => e.currentTarget.style.background='rgba(200,169,106,0.8)'}
+        onMouseLeave={e => e.currentTarget.style.background='rgba(255,255,255,0.1)'}
+        aria-label="Close image"
+      >
+        <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round"/>
+        </svg>
+      </button>
+      {/* Image container */}
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          maxWidth: 'min(90vw, 1100px)', maxHeight: '88vh',
+          borderRadius: '16px', overflow: 'hidden',
+          boxShadow: '0 40px 80px rgba(0,0,0,0.6)',
+          animation: 'scaleIn 0.3s cubic-bezier(0.23,1,0.32,1)',
+          display: 'flex', flexDirection: 'column',
+          background: '#111',
+        }}
+      >
+        <img
+          src={image.src}
+          alt={image.title}
+          style={{ width: '100%', maxHeight: '80vh', objectFit: 'contain', display: 'block' }}
+        />
+        {(image.title || image.category) && (
+          <div style={{
+            padding: '16px 24px', background: '#111',
+            display: 'flex', alignItems: 'center', gap: '12px',
+          }}>
+            {image.title && (
+              <span style={{ color: '#fff', fontWeight: 500, fontSize: '15px' }}>{image.title}</span>
+            )}
+            {image.category && (
+              <span style={{
+                color: '#C8A96A', fontSize: '10px', letterSpacing: '0.2em',
+                textTransform: 'uppercase', padding: '3px 10px',
+                border: '1px solid rgba(200,169,106,0.4)', borderRadius: '999px',
+              }}>{image.category}</span>
+            )}
+          </div>
+        )}
+      </div>
+      {/* ESC hint */}
+      <p style={{
+        position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)',
+        color: 'rgba(255,255,255,0.3)', fontSize: '11px', letterSpacing: '0.15em',
+        textTransform: 'uppercase', whiteSpace: 'nowrap',
+      }}>Press ESC to close</p>
+    </div>
+  );
+}
+
 export default function Home() {
   const [heroSlides, setHeroSlides] = useState([]);
   const [gallery, setGallery] = useState([]);
@@ -240,6 +349,7 @@ export default function Home() {
   const [loaderHidden, setLoaderHidden] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(null);
   const loaderRef = useRef(null);
   const baRefs = useRef([]);
 
@@ -382,6 +492,11 @@ export default function Home() {
       <Head>
         <title>SK Interior — Luxury Interior Design Studio, Mumbai</title>
       </Head>
+
+      {/* Image Lightbox Modal */}
+      {selectedImage && (
+        <ImageModal image={selectedImage} onClose={() => setSelectedImage(null)} />
+      )}
 
       {/* Loader */}
       <div id="loader">
@@ -605,7 +720,7 @@ export default function Home() {
           </div>
           <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(280px, 1fr))', gap:'20px', marginTop:'48px'}}>
             {filteredGallery.map(item => (
-              <PortfolioCard key={item._id} item={item} />
+              <PortfolioCard key={item._id} item={item} onOpen={setSelectedImage} />
             ))}
           </div>
         </div>
