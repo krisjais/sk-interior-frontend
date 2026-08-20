@@ -611,7 +611,7 @@ function TestimonialsSection({ token }) {
             <div key={item._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col justify-between group relative">
               <div>
                 <div className="flex text-[#C8A96A] text-sm mb-3">{'★'.repeat(item.rating)}</div>
-                <p className="text-gray-600 text-sm italic leading-relaxed">"{item.text}"</p>
+                <p className="text-gray-600 text-sm italic leading-relaxed">&ldquo;{item.text}&rdquo;</p>
               </div>
               <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-50">
                 <div>
@@ -753,7 +753,7 @@ function BookingsSection({ token }) {
                 <div><p className="text-[10px] text-gray-400 uppercase">Budget</p><p className="text-sm mt-0.5">{b.budget || '—'}</p></div>
                 <div><p className="text-[10px] text-gray-400 uppercase">Date</p><p className="text-sm mt-0.5">{new Date(b.createdAt).toLocaleDateString('en-IN')}</p></div>
               </div>
-              {b.message && <p className="text-xs text-gray-500 mt-3 pt-3 border-t border-gray-50 italic">"{b.message}"</p>}
+              {b.message && <p className="text-xs text-gray-500 mt-3 pt-3 border-t border-gray-50 italic">&ldquo;{b.message}&rdquo;</p>}
             </div>
           ))}
         </div>
