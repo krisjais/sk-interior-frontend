@@ -16,9 +16,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Track scroll position for navbar style change
+  // Track scroll position for navbar background change
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60);
+    const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
@@ -31,10 +31,21 @@ export default function Navbar() {
     return () => router.events.off('routeChangeComplete', handleRouteChange);
   }, [router.events]);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll when mobile menu is open & listen for Escape key
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && menuOpen) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [menuOpen]);
 
   const isActive = (href) => {
@@ -42,67 +53,72 @@ export default function Navbar() {
     return router.pathname.startsWith(href);
   };
 
-  // Determine colours based on scroll state
-  const textColor = scrolled ? 'text-[#151515]' : 'text-[#F3F1ED]';
-  const mutedColor = scrolled ? 'text-[#151515]/60' : 'text-[#F3F1ED]/70';
-
   return (
     <>
-      {/* ── Desktop / Main Navbar ── */}
+      {/* ── Main Top Navbar ── */}
       <nav
         id="navbar"
         className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-500 ${
-          scrolled ? 'glass-light shadow-sm' : 'bg-transparent'
+          scrolled
+            ? 'bg-[#0D0D0D]/90 backdrop-blur-md border-b border-white/10 shadow-2xl py-1'
+            : 'bg-gradient-to-b from-black/90 via-black/50 to-transparent py-2'
         }`}
         aria-label="Main navigation"
       >
         <div className="section-shell">
-          <div className="flex items-center justify-between h-[72px] lg:h-[88px] px-4 sm:px-0">
+          <div className="flex items-center justify-between h-[76px] lg:h-[88px] px-4 sm:px-0">
 
-            {/* Logo */}
+            {/* Main Studio Logo */}
             <Link
               href="/"
-              className="flex flex-col items-start group"
+              className="flex flex-col items-start group py-1"
               aria-label="SK Interior — Home"
             >
+              <div className="flex items-center gap-2">
+                <span
+                  className="text-[1.4rem] sm:text-[1.6rem] lg:text-[1.75rem] font-light tracking-[0.10em] uppercase text-[#F3F1ED] group-hover:text-[#B59A62] transition-colors duration-300"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  SK Interior
+                </span>
+              </div>
               <span
-                className={`text-[1.35rem] lg:text-[1.6rem] font-light tracking-[0.10em] uppercase transition-colors duration-300 ${textColor}`}
-                style={{ fontFamily: 'var(--font-display)' }}
+                className="text-[8px] sm:text-[9px] tracking-[0.32em] uppercase font-bold text-[#B59A62] mt-[-2px] block"
+                style={{ fontFamily: 'var(--font-body)' }}
               >
-                SK Interior
-              </span>
-              <span className={`text-[8px] tracking-[0.36em] uppercase mt-[-3px] transition-colors duration-300 ${mutedColor}`}>
-                Design Studio · Mumbai
+                STUDIO · SANTACRUZ, MUMBAI
               </span>
             </Link>
 
             {/* Desktop Nav Links */}
             <div className="hidden lg:flex items-center gap-7 xl:gap-9">
-              {NAV_LINKS.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className={`nav-link text-[9.5px] tracking-[0.26em] uppercase font-semibold transition-colors duration-300 ${
-                    isActive(href)
-                      ? scrolled ? 'text-[#B59A62]' : 'text-[#B59A62]'
-                      : scrolled ? 'text-[#151515]/65' : 'text-[#F3F1ED]/75'
-                  } ${isActive(href) ? 'active' : ''}`}
-                >
-                  {label}
-                </Link>
-              ))}
+              {NAV_LINKS.map(({ href, label }) => {
+                const active = isActive(href);
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={`relative text-[10px] tracking-[0.26em] uppercase font-bold transition-all duration-300 py-1 ${
+                      active
+                        ? 'text-[#B59A62]'
+                        : 'text-[#F3F1ED]/80 hover:text-[#F3F1ED]'
+                    }`}
+                  >
+                    <span>{label}</span>
+                    {active && (
+                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#B59A62]" />
+                    )}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Right Side Actions */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               {/* CTA — Desktop */}
               <Link
                 href="/contact"
-                className={`hidden lg:inline-flex items-center justify-center px-5 py-2.5 rounded-full border text-[9.5px] tracking-[0.24em] uppercase font-semibold transition-all duration-300 hover:-translate-y-px ${
-                  scrolled
-                    ? 'border-[#151515]/20 text-[#151515] hover:bg-[#151515] hover:text-[#F3F1ED] hover:border-[#151515]'
-                    : 'border-[#F3F1ED]/30 text-[#F3F1ED] hover:border-[#B59A62] hover:text-[#B59A62]'
-                }`}
+                className="hidden lg:inline-flex items-center justify-center px-6 py-2.5 rounded-full border border-[#B59A62]/60 text-[#F3F1ED] text-[9.5px] tracking-[0.24em] uppercase font-bold hover:bg-[#B59A62] hover:text-[#111111] hover:border-[#B59A62] transition-all duration-300 shadow-md"
               >
                 Start a Project
               </Link>
@@ -114,21 +130,21 @@ export default function Navbar() {
                 aria-expanded={menuOpen}
                 aria-controls="mobile-nav"
                 onClick={() => setMenuOpen((v) => !v)}
-                className={`flex flex-col items-end justify-center gap-[5px] w-10 h-10 lg:hidden transition-colors duration-300 ${textColor}`}
+                className="flex flex-col items-end justify-center gap-[5px] w-10 h-10 lg:hidden text-[#F3F1ED] hover:text-[#B59A62] transition-colors"
               >
                 <span
-                  className={`block h-px bg-current transition-all duration-350 ${
-                    menuOpen ? 'w-5 translate-y-[9px] rotate-45' : 'w-5'
+                  className={`block h-[2px] bg-current transition-all duration-350 ${
+                    menuOpen ? 'w-5 translate-y-[8px] rotate-45' : 'w-6'
                   }`}
                 />
                 <span
-                  className={`block h-px bg-current transition-all duration-350 ${
-                    menuOpen ? 'w-5 opacity-0' : 'w-3.5'
+                  className={`block h-[2px] bg-current transition-all duration-350 ${
+                    menuOpen ? 'w-5 opacity-0' : 'w-4'
                   }`}
                 />
                 <span
-                  className={`block h-px bg-current transition-all duration-350 ${
-                    menuOpen ? 'w-5 -translate-y-[9px] -rotate-45' : 'w-5'
+                  className={`block h-[2px] bg-current transition-all duration-350 ${
+                    menuOpen ? 'w-5 -translate-y-[8px] -rotate-45' : 'w-6'
                   }`}
                 />
               </button>
@@ -147,7 +163,8 @@ export default function Navbar() {
           menuOpen ? 'open' : ''
         }`}
         style={{
-          background: 'var(--color-bg)',
+          background: '#0D0D0D',
+          pointerEvents: menuOpen ? 'auto' : 'none',
           clipPath: menuOpen
             ? 'circle(150% at calc(100% - 40px) 44px)'
             : 'circle(0% at calc(100% - 40px) 44px)',
@@ -160,9 +177,9 @@ export default function Navbar() {
             type="button"
             aria-label="Close menu"
             onClick={() => setMenuOpen(false)}
-            className="w-10 h-10 flex items-center justify-center text-[#F3F1ED]/60 hover:text-[#B59A62] transition-colors"
+            className="w-10 h-10 flex items-center justify-center text-[#F3F1ED]/70 hover:text-[#B59A62] transition-colors"
           >
-            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+            <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
             </svg>
           </button>
@@ -175,7 +192,7 @@ export default function Navbar() {
               key={href}
               href={href}
               onClick={() => setMenuOpen(false)}
-              className={`block py-4 border-b border-white/5 transition-colors duration-300 ${
+              className={`block py-4 border-b border-white/10 transition-colors duration-300 ${
                 isActive(href) ? 'text-[#B59A62]' : 'text-[#F3F1ED]/80 hover:text-[#F3F1ED]'
               }`}
               style={{
@@ -197,20 +214,19 @@ export default function Navbar() {
           <Link
             href="/contact"
             onClick={() => setMenuOpen(false)}
-            className="mt-8 inline-flex items-center gap-3 text-[#B59A62] text-[10px] tracking-[0.28em] uppercase font-semibold"
+            className="mt-8 inline-flex items-center justify-center py-4 rounded-full bg-[#B59A62] text-[#111111] text-[11px] tracking-[0.28em] uppercase font-bold shadow-lg"
             style={{
               opacity: menuOpen ? 1 : 0,
               transform: menuOpen ? 'translateY(0)' : 'translateY(10px)',
               transition: `opacity 0.5s ease ${NAV_LINKS.length * 60 + 80}ms, transform 0.5s ease ${NAV_LINKS.length * 60 + 80}ms`,
             }}
           >
-            <span className="block w-6 h-px bg-current" />
-            Start a Project
+            Start a Project →
           </Link>
         </div>
 
         {/* Footer in mobile menu */}
-        <div className="px-8 pb-10 text-[#F3F1ED]/20 text-[10px] tracking-[0.2em] uppercase">
+        <div className="px-8 pb-10 text-[#F3F1ED]/40 text-[10px] tracking-[0.2em] uppercase font-semibold">
           <p>hello@skinterior.in · 98707 60240</p>
         </div>
       </div>

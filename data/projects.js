@@ -6,16 +6,16 @@
 
 export const PROJECTS = [
   {
-    slug: 'the-pali-residence',
+    slug: 'the-santacruz-residence',
     number: '01',
-    title: 'The Pali Residence',
+    title: 'The Santacruz Residence',
     category: 'Residential',
-    location: 'Pali Hill, Mumbai',
+    location: 'Santacruz, Mumbai',
     year: '2024',
     scope: 'Complete Interiors · 3,200 sq ft',
     coverImage: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=80',
     heroImage: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1920&q=80',
-    intro: 'A 3,200 sq ft family residence in the heart of Pali Hill, reimagined as a calm, layered interior that balances warmth with restraint. Every material was chosen for its tactile quality and its ability to age gracefully.',
+    intro: 'A 3,200 sq ft family residence in the heart of Santacruz, reimagined as a calm, layered interior that balances warmth with restraint. Every material was chosen for its tactile quality and its ability to age gracefully.',
     challenge: 'The existing layout fragmented the social spaces into disconnected rooms, and the large windows — while flooding the apartment with light — had no cohesive response in the material palette.',
     response: 'We opened the living, dining, and kitchen into a single continuous plane, anchored by a long limestone island and a full-height bookwall. The window frames were treated as architectural moments, each with a deep sill and woven roman blind.',
     materials: ['Limestone flooring', 'Wenge veneer joinery', 'Handwoven linen upholstery', 'Brushed brass hardware', 'Venetian plaster walls'],

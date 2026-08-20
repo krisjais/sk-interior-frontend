@@ -11,7 +11,7 @@ const DEFAULT_SLIDES = [
   {
     imageUrl:
       'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1920&q=80',
-    alt: 'Pali Hill Residence — SK Interior',
+    alt: 'Santacruz Residence — SK Interior',
   },
   {
     imageUrl:
@@ -28,9 +28,9 @@ const DEFAULT_SLIDES = [
 const DEFAULT_TESTIMONIALS = [
   {
     name: 'Vikram & Radhika Mehta',
-    loc: 'Pali Hill, Mumbai',
+    loc: 'Santacruz, Mumbai',
     text: 'SK Interior transformed our 3,200 sq ft apartment into a sanctuary of calm. Simran’s eye for material relationships and restraint created a space that feels deeply personal, quiet, and effortlessly luxurious.',
-    project: 'The Pali Residence',
+    project: 'The Santacruz Residence',
   },
   {
     name: 'Siddharth Singhania',
@@ -188,7 +188,7 @@ export default function HomePage() {
     <>
       <SEO
         title="Luxury Interior Design Studio, Mumbai"
-        description="SK Interior is a premium interior design and architecture studio in Pali Hill, Mumbai. Specialising in residential, commercial, and hospitality interiors."
+        description="SK Interior is a premium interior design and architecture studio in Santacruz, Mumbai. Specialising in residential, commercial, and hospitality interiors."
         canonical="/"
       />
 
@@ -221,10 +221,10 @@ export default function HomePage() {
           </div>
 
           {/* Hero Content Layer */}
-          <div className="container-wide relative z-10 pb-16 lg:pb-24 pt-36 sm:pt-40 lg:pt-44 w-full">
+          <div className="container-wide relative z-10 pb-16 lg:pb-20 pt-32 sm:pt-36 lg:pt-40 w-full">
             <div className="max-w-4xl">
               <span className="section-label text-[#B59A62] mb-6 block">
-                Pali Hill · Mumbai
+                Santacruz · Mumbai
               </span>
 
               {/* Large Editorial Headline */}
@@ -348,7 +348,7 @@ export default function HomePage() {
                   {/* Subtle decorative badge */}
                   <div className="absolute -bottom-6 -left-6 bg-[#111111] text-[#F3F1ED] p-6 rounded-lg hidden sm:block shadow-strong">
                     <p className="text-[9px] tracking-[0.26em] uppercase text-[#B59A62] font-semibold mb-1">
-                      Pali Hill Studio
+                      Santacruz Studio
                     </p>
                     <p className="text-xs font-light text-[#F3F1ED]/70" style={{ fontFamily: 'var(--font-body)' }}>
                       Est. 2015 · Mumbai

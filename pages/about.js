@@ -54,7 +54,7 @@ const TEAM_MEMBERS = [
 ];
 
 const STUDIO_FACTS = [
-  { label: 'Based In', value: 'Pali Hill, Mumbai' },
+  { label: 'Based In', value: 'Santacruz, Mumbai' },
   { label: 'Practice Areas', value: 'Residential · Commercial · Hospitality' },
   { label: 'Design Approach', value: 'Bespoke Interior Architecture' },
   { label: 'Project Scope', value: 'Turnkey Delivery & Material Advisory' },
@@ -65,7 +65,7 @@ export default function AboutPage() {
     <>
       <SEO
         title="About Studio — Our Philosophy & Approach"
-        description="SK Interior is a luxury interior architecture practice in Pali Hill, Mumbai. Learn about our studio story, design principles, and approach."
+        description="SK Interior is a luxury interior architecture practice in Santacruz, Mumbai. Learn about our studio story, design principles, and approach."
         canonical="/about"
       />
 
@@ -100,7 +100,7 @@ export default function AboutPage() {
                   className="text-[14.5px] sm:text-[16px] leading-relaxed text-[#F3F1ED]/60 font-light max-w-lg"
                   style={{ fontFamily: 'var(--font-body)' }}
                 >
-                  SK Interior was established in Pali Hill, Mumbai as an interior architecture studio dedicated to spatial restraint, authentic materials, and long-term thinking.
+                  SK Interior was established in Santacruz, Mumbai as an interior architecture studio dedicated to spatial restraint, authentic materials, and long-term thinking.
                 </p>
               </div>
             </div>
@@ -137,7 +137,7 @@ export default function AboutPage() {
               <SectionReveal direction="right" delay={100}>
                 <div className="space-y-6 text-[15px] sm:text-[16px] leading-relaxed text-[#6F6B65] font-light" style={{ fontFamily: 'var(--font-body)' }}>
                   <p className="text-[18px] sm:text-[21px] text-[#151515] font-normal leading-snug" style={{ fontFamily: 'var(--font-display)' }}>
-                    "The quietest rooms are often the most powerful. Our work is not about filling space with ornament, but carving out room for life to happen."
+                    &ldquo;The quietest rooms are often the most powerful. Our work is not about filling space with ornament, but carving out room for life to happen.&rdquo;
                   </p>
                   <div className="h-px bg-black/10 my-6" />
                   <p>
