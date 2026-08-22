@@ -4,41 +4,14 @@ export default function Document() {
   return (
     <Html lang="en" className="scroll-smooth">
       <Head>
-        <meta name="description" content="SK Interior is a premium interior design studio in Pali Hill, Mumbai. Specializing in residential, commercial interiors, modular kitchens, and luxury renovations." />
-        <meta property="og:title" content="SK Interior — Luxury Interior Design Studio" />
-        <meta property="og:description" content="Premium interior design services in Mumbai. 4.9★ rated. Transforming spaces since 2015." />
+        {/* Global document-level meta only — page-specific meta goes in each page via next/head */}
+        <meta name="theme-color" content="#111111" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <link rel="canonical" href="https://skinterior.in" />
-        <script src="https://cdn.tailwindcss.com" async></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if (typeof window !== 'undefined') {
-                window.tailwind = window.tailwind || {};
-                window.tailwind.config = {
-                  theme: {
-                    extend: {
-                      colors: {
-                        gold: '#C8A96A',
-                        'gold-light': '#D4BC8A',
-                        'gold-dark': '#A88B4A',
-                        charcoal: '#121212',
-                        'charcoal-light': '#1A1A1A',
-                        'charcoal-lighter': '#2A2A2A',
-                        cream: '#F5F5F5',
-                      },
-                      fontFamily: {
-                        playfair: ['Playfair Display', 'serif'],
-                        poppins: ['Poppins', 'sans-serif'],
-                      },
-                      letterSpacing: { ultra: '0.3em' }
-                    }
-                  }
-                };
-              }
-            `
-          }}
-        />
+        <meta property="og:site_name" content="SK Interior" />
+        {/* Preconnect for fonts (already imported in globals.css, but helps prioritize) */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </Head>
       <body className="antialiased">
         <Main />
