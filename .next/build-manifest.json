@@ -42,11 +42,11 @@
     "/admin/dashboard": [
       "static/chunks/3ec8ztgpctax0.js",
       "static/chunks/3mbdal7m2vaeq.js",
-      "static/chunks/3my9fzcfm94aw.js",
+      "static/chunks/2qwv8amvcif40.js",
       "static/chunks/0rlgvf1ti32t8.js",
       "static/chunks/3543cnrg2ug47.js",
       "static/chunks/1gen6c6rkyejj.js",
-      "static/chunks/turbopack-3n20enj5h1d6_.js"
+      "static/chunks/turbopack-3kcle4r8koyt8.js"
     ],
     "/admin/login": [
       "static/chunks/16cfljt9jrh1j.js",
@@ -118,9 +118,9 @@
   "devFiles": [],
   "polyfillFiles": [],
   "lowPriorityFiles": [
-    "static/M_JRKuxxdOnWmkSWdxpWS/_buildManifest.js",
-    "static/M_JRKuxxdOnWmkSWdxpWS/_ssgManifest.js",
-    "static/M_JRKuxxdOnWmkSWdxpWS/_clientMiddlewareManifest.js"
+    "static/bvPNk7vo-wp_unxsDl9OS/_buildManifest.js",
+    "static/bvPNk7vo-wp_unxsDl9OS/_ssgManifest.js",
+    "static/bvPNk7vo-wp_unxsDl9OS/_clientMiddlewareManifest.js"
   ],
   "rootMainFiles": [],
   "rootMainFilesTree": {},

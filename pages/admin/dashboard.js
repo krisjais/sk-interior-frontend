@@ -9,11 +9,31 @@ const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
 function useAuth() {
   const router = useRouter();
   const [token, setToken] = useState(null);
+
   useEffect(() => {
     const t = localStorage.getItem('sk_token');
-    if (!t) { router.push('/admin/login'); return; }
+    if (!t) {
+      router.push('/admin/login');
+      return;
+    }
     setToken(t);
-  }, []);
+
+    const interceptor = axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response?.status === 401) {
+          localStorage.removeItem('sk_token');
+          router.push('/admin/login');
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axios.interceptors.response.eject(interceptor);
+    };
+  }, [router]);
+
   return token;
 }
 
