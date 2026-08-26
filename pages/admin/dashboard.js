@@ -259,28 +259,67 @@ function ProjectsSection({ token }) {
   const [categories, setCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editItem, setEditItem] = useState(null);
-  const [form, setForm] = useState({ title: '', category: '', newCategory: '', description: '', order: 0 });
+  const [form, setForm] = useState({
+    title: '',
+    category: '',
+    newCategory: '',
+    location: '',
+    year: '',
+    scope: '',
+    description: '',
+    featured: false,
+    order: 0
+  });
   const [file, setFile] = useState(null);
   const [saving, setSaving] = useState(false);
   const [preview, setPreview] = useState(null);
 
   const load = async () => {
-    const { data } = await axios.get(`${API}/gallery`);
-    setItems(data);
-    const cats = [...new Set(data.map(d => d.category))];
-    setCategories(cats);
+    try {
+      const { data } = await axios.get(`${API}/gallery`);
+      setItems(data);
+      const cats = [...new Set(data.map(d => d.category).filter(Boolean))];
+      setCategories(cats);
+    } catch (err) {
+      console.error('Failed to load gallery items', err);
+    }
   };
   useEffect(() => { if (token) load(); }, [token]);
 
   const openCreate = () => {
     setEditItem(null);
-    setForm({ title: '', category: categories[0] || '', newCategory: '', description: '', order: 0 });
-    setFile(null); setPreview(null); setShowModal(true);
+    setForm({
+      title: '',
+      category: categories[0] || 'residential',
+      newCategory: '',
+      location: 'Santacruz, Mumbai',
+      year: new Date().getFullYear().toString(),
+      scope: '',
+      description: '',
+      featured: false,
+      order: 0
+    });
+    setFile(null);
+    setPreview(null);
+    setShowModal(true);
   };
+
   const openEdit = (item) => {
     setEditItem(item);
-    setForm({ title: item.title, category: item.category, newCategory: '', description: item.description || '', order: item.order || 0 });
-    setFile(null); setPreview(imgSrc(item.imageUrl)); setShowModal(true);
+    setForm({
+      title: item.title,
+      category: item.category,
+      newCategory: '',
+      location: item.location || '',
+      year: item.year || '',
+      scope: item.scope || '',
+      description: item.description || '',
+      featured: !!item.featured,
+      order: item.order || 0
+    });
+    setFile(null);
+    setPreview(imgSrc(item.imageUrl));
+    setShowModal(true);
   };
 
   const handleFile = (e) => {
@@ -294,33 +333,61 @@ function ProjectsSection({ token }) {
     e.preventDefault();
     setSaving(true);
     const finalCat = form.newCategory.trim() || form.category;
-    if (!finalCat) return alert('Please select or enter a category');
+    if (!finalCat) {
+      alert('Please select or enter a category');
+      setSaving(false);
+      return;
+    }
     const fd = new FormData();
     fd.append('title', form.title);
     fd.append('category', finalCat.toLowerCase());
+    fd.append('location', form.location);
+    fd.append('year', form.year);
+    fd.append('scope', form.scope);
     fd.append('description', form.description);
+    fd.append('featured', form.featured ? 'true' : 'false');
     fd.append('order', form.order);
     if (file) fd.append('image', file);
+
     try {
       if (editItem) {
         await axios.put(`${API}/gallery/${editItem._id}`, fd, authH(token));
       } else {
-        if (!file) { alert('Please select an image'); setSaving(false); return; }
+        if (!file) {
+          alert('Please select an image');
+          setSaving(false);
+          return;
+        }
         await axios.post(`${API}/gallery`, fd, authH(token));
       }
       setShowModal(false);
       load();
     } catch (err) {
-      alert(err.response?.data?.message || 'Error saving');
+      alert(err.response?.data?.message || 'Error saving project');
     } finally {
       setSaving(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Delete this image?')) return;
-    await axios.delete(`${API}/gallery/${id}`, authH(token));
-    load();
+    if (!confirm('Delete this project? This will remove its photos and database record permanently.')) return;
+    try {
+      await axios.delete(`${API}/gallery/${id}`, authH(token));
+      load();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Error deleting project');
+    }
+  };
+
+  const handleToggleFeatured = async (item) => {
+    try {
+      const fd = new FormData();
+      fd.append('featured', !item.featured ? 'true' : 'false');
+      await axios.put(`${API}/gallery/${item._id}`, fd, authH(token));
+      load();
+    } catch (err) {
+      alert('Error updating featured status');
+    }
   };
 
   const filtered = filterCat === 'all' ? items : items.filter(i => i.category === filterCat);
@@ -330,9 +397,9 @@ function ProjectsSection({ token }) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold text-gray-900">Projects</h2>
-          <p className="text-gray-400 text-sm mt-0.5">{items.length} images across {categories.length} categories</p>
+          <p className="text-gray-400 text-sm mt-0.5">{items.length} projects across {categories.length} categories</p>
         </div>
-        <button onClick={openCreate} className="flex items-center gap-2 bg-[#C8A96A] hover:bg-[#b8945a] text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors">
+        <button onClick={openCreate} className="flex items-center gap-2 bg-[#C8A96A] hover:bg-[#b8945a] text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors shadow-sm">
           <Icon.plus /> Add Project
         </button>
       </div>
@@ -358,19 +425,59 @@ function ProjectsSection({ token }) {
           <p className="text-sm">No projects yet. Click "Add Project" to get started.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {filtered.map(item => (
-            <div key={item._id} className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm group">
-              <div className="relative overflow-hidden h-44">
-                <img src={imgSrc(item.imageUrl)} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                  <button onClick={() => openEdit(item)} className="bg-white text-gray-700 hover:bg-[#C8A96A] hover:text-white p-2 rounded-lg transition-colors"><Icon.edit /></button>
-                  <button onClick={() => handleDelete(item._id)} className="bg-white text-red-500 hover:bg-red-500 hover:text-white p-2 rounded-lg transition-colors"><Icon.trash /></button>
+            <div key={item._id} className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm group flex flex-col justify-between">
+              <div>
+                <div className="relative overflow-hidden h-48 bg-gray-50">
+                  <img src={imgSrc(item.imageUrl)} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  
+                  {/* Featured Badge */}
+                  {item.featured && (
+                    <div className="absolute top-2.5 left-2.5 bg-[#B59A62] text-[#111111] text-[10px] tracking-wider uppercase font-bold px-2 py-0.5 rounded shadow">
+                      ★ Featured
+                    </div>
+                  )}
+
+                  {/* Actions overlay */}
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      title={item.featured ? 'Remove from Homepage Featured' : 'Feature on Homepage'}
+                      onClick={() => handleToggleFeatured(item)}
+                      className={`p-2 rounded-lg transition-colors ${item.featured ? 'bg-[#B59A62] text-white' : 'bg-white text-gray-700 hover:bg-[#B59A62] hover:text-white'}`}
+                    >
+                      ★
+                    </button>
+                    <button
+                      type="button"
+                      title="Edit Project"
+                      onClick={() => openEdit(item)}
+                      className="bg-white text-gray-700 hover:bg-[#C8A96A] hover:text-white p-2 rounded-lg transition-colors"
+                    >
+                      <Icon.edit />
+                    </button>
+                    <button
+                      type="button"
+                      title="Delete Project"
+                      onClick={() => handleDelete(item._id)}
+                      className="bg-white text-red-500 hover:bg-red-500 hover:text-white p-2 rounded-lg transition-colors"
+                    >
+                      <Icon.trash />
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="p-3">
-                <p className="font-medium text-sm text-gray-800 truncate">{item.title}</p>
-                <span className="inline-block mt-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#C8A96A]/10 text-[#C8A96A] capitalize">{item.category}</span>
+
+                <div className="p-3.5">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#C8A96A]/10 text-[#C8A96A] capitalize">
+                      {item.category}
+                    </span>
+                    {item.year && <span className="text-[11px] text-gray-400">{item.year}</span>}
+                  </div>
+                  <h4 className="font-semibold text-sm text-gray-800 truncate" title={item.title}>{item.title}</h4>
+                  {item.location && <p className="text-xs text-gray-400 mt-0.5 truncate">{item.location}</p>}
+                </div>
               </div>
             </div>
           ))}
@@ -381,31 +488,70 @@ function ProjectsSection({ token }) {
         <Modal title={editItem ? 'Edit Project' : 'Add New Project'} onClose={() => setShowModal(false)}>
           <form onSubmit={handleSubmit} className="space-y-4">
             <Field label="Title *">
-              <input className={inp} required value={form.title} onChange={e => setForm(p => ({...p, title: e.target.value}))} placeholder="e.g. Modern Master Bedroom" />
+              <input className={inp} required value={form.title} onChange={e => setForm(p => ({...p, title: e.target.value}))} placeholder="e.g. The Santacruz Residence" />
             </Field>
-            <Field label="Category">
-              <select className={inp} value={form.category} onChange={e => setForm(p => ({...p, category: e.target.value}))}>
-                <option value="">-- Select existing --</option>
-                {categories.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
-              </select>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Field label="Category">
+                <select className={inp} value={form.category} onChange={e => setForm(p => ({...p, category: e.target.value}))}>
+                  <option value="">-- Select existing --</option>
+                  {categories.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
+                </select>
+              </Field>
+              <Field label="Or New Category">
+                <input className={inp} value={form.newCategory} onChange={e => setForm(p => ({...p, newCategory: e.target.value}))} placeholder="e.g. Penthouse, Hospitality..." />
+              </Field>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Field label="Location">
+                <input className={inp} value={form.location} onChange={e => setForm(p => ({...p, location: e.target.value}))} placeholder="e.g. Santacruz, Mumbai" />
+              </Field>
+              <Field label="Year">
+                <input className={inp} value={form.year} onChange={e => setForm(p => ({...p, year: e.target.value}))} placeholder="e.g. 2024" />
+              </Field>
+            </div>
+
+            <Field label="Scope">
+              <input className={inp} value={form.scope} onChange={e => setForm(p => ({...p, scope: e.target.value}))} placeholder="e.g. Complete Interiors · 3,200 sq ft" />
             </Field>
-            <Field label="Or create new category">
-              <input className={inp} value={form.newCategory} onChange={e => setForm(p => ({...p, newCategory: e.target.value}))} placeholder="e.g. Terrace, Pooja Room, Kids Room..." />
-              <p className="text-[11px] text-gray-400 mt-1">If filled, this overrides the selection above</p>
+
+            <Field label="Description / Brief">
+              <textarea className={inp + ' resize-none'} rows={3} value={form.description} onChange={e => setForm(p => ({...p, description: e.target.value}))} placeholder="Overview of the project design and details..." />
             </Field>
-            <Field label="Description">
-              <textarea className={inp + ' resize-none'} rows={2} value={form.description} onChange={e => setForm(p => ({...p, description: e.target.value}))} placeholder="Optional" />
-            </Field>
+
+            <div className="flex items-center justify-between py-2 border-y border-gray-100">
+              <div>
+                <label className="text-xs font-semibold text-gray-800 block">Feature on Homepage</label>
+                <p className="text-[11px] text-gray-400">Show this project in the Selected Works section on the homepage</p>
+              </div>
+              <input
+                type="checkbox"
+                checked={form.featured}
+                onChange={e => setForm(p => ({...p, featured: e.target.checked}))}
+                className="w-4 h-4 text-[#C8A96A] rounded border-gray-300 focus:ring-[#C8A96A]"
+              />
+            </div>
+
             <Field label="Display Order">
               <input type="number" className={inp} value={form.order} onChange={e => setForm(p => ({...p, order: +e.target.value}))} />
             </Field>
-            <Field label={editItem ? 'Replace Image' : 'Image *'}>
+
+            <Field label={editItem ? 'Replace Photo (optional)' : 'Project Photo *'}>
               <input type="file" accept="image/*" onChange={handleFile} className={inp} />
-              {preview && <img src={preview} className="mt-2 h-32 w-full object-cover rounded-xl" />}
+              {preview && (
+                <div className="mt-2 relative rounded-xl overflow-hidden border border-gray-200">
+                  <img src={preview} className="h-40 w-full object-cover" alt="Preview" />
+                  <span className="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded">
+                    {file ? 'New Photo Selected' : 'Current Photo'}
+                  </span>
+                </div>
+              )}
             </Field>
+
             <div className="flex gap-3 pt-2">
               <button type="submit" disabled={saving} className="flex-1 bg-[#C8A96A] hover:bg-[#b8945a] text-white font-medium py-2.5 rounded-xl transition-colors disabled:opacity-60">
-                {saving ? 'Saving...' : editItem ? 'Update' : 'Add Project'}
+                {saving ? 'Saving...' : editItem ? 'Update Project' : 'Add Project'}
               </button>
               <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 rounded-xl transition-colors">
                 Cancel

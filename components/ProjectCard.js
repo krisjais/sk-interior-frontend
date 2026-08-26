@@ -1,16 +1,19 @@
 import Link from 'next/link';
+import { resolveImageSrc } from '../lib/api';
 
 export default function ProjectCard({ project, aspect = 'ratio-4-3', featured = false }) {
   if (!project) return null;
 
+  const imageSrc = resolveImageSrc(project.coverImage || project.imageUrl || project.heroImage);
+
   return (
     <Link
-      href={`/projects/${project.slug}`}
+      href={`/projects/${project.slug || project._id}`}
       className={`group project-card-editorial block ${featured ? 'lg:col-span-2' : ''}`}
     >
       <div className={`card-img img-cover ${aspect} mb-5 rounded-lg relative overflow-hidden`}>
         <img
-          src={project.coverImage || project.heroImage}
+          src={imageSrc}
           alt={project.title}
           loading="lazy"
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"

@@ -1,32 +1,46 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import axios from 'axios';
 import SEO from '../../components/SEO';
 import SectionReveal from '../../components/SectionReveal';
-import { PROJECTS, getProjectBySlug, getRelatedProjects } from '../../data/projects';
+import { API, resolveImageSrc } from '../../lib/api';
 
 export default function ProjectDetailPage({ project, nextProject }) {
   const [selectedImage, setSelectedImage] = useState(null);
 
   if (!project) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-[#111111] text-[#F3F1ED]">
-        <div className="text-center">
-          <h1 className="display-md">Project Not Found</h1>
-          <Link href="/projects" className="arrow-btn text-[#B59A62] mt-6">
-            Back to Projects
+      <main className="min-h-screen flex items-center justify-center bg-[#111111] text-[#F3F1ED] px-4">
+        <div className="text-center max-w-md">
+          <span className="section-label justify-center text-[#B59A62] mb-4 block">Portfolio</span>
+          <h1 className="text-3xl sm:text-4xl font-light mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+            Project Not Found
+          </h1>
+          <p className="text-sm font-light text-[#F3F1ED]/60 mb-8" style={{ fontFamily: 'var(--font-body)' }}>
+            The requested project could not be found or may have been removed.
+          </p>
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-[10.5px] tracking-[0.24em] uppercase font-semibold bg-[#B59A62] text-[#111111] hover:bg-[#a68c56] transition-colors"
+          >
+            ← Back to Projects
           </Link>
         </div>
       </main>
     );
   }
 
+  const coverUrl = resolveImageSrc(project.coverImage);
+  const heroUrl = resolveImageSrc(project.heroImage || project.coverImage);
+  const galleryImages = (project.images || []).map(img => resolveImageSrc(img)).filter(Boolean);
+
   return (
     <>
       <SEO
         title={project.title}
-        description={project.intro}
+        description={project.intro || `${project.title} — SK Interior Architecture & Design`}
         canonical={`/projects/${project.slug}`}
-        ogImage={project.coverImage}
+        ogImage={coverUrl}
       />
 
       <main className="overflow-x-hidden">
@@ -48,7 +62,7 @@ export default function ProjectDetailPage({ project, nextProject }) {
               </Link>
               <span className="text-[#F3F1ED]/30 text-xs">/</span>
               <span className="text-[10px] tracking-[0.24em] uppercase text-[#B59A62] font-semibold">
-                {project.category}
+                {project.category || 'Interior Design'}
               </span>
             </div>
 
@@ -69,32 +83,31 @@ export default function ProjectDetailPage({ project, nextProject }) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/10 text-[13px]">
               <div>
                 <p className="text-[9px] tracking-[0.22em] uppercase text-[#B59A62] font-semibold mb-1">Location</p>
-                <p className="text-[#F3F1ED]/70 font-light" style={{ fontFamily: 'var(--font-body)' }}>{project.location}</p>
+                <p className="text-[#F3F1ED]/70 font-light" style={{ fontFamily: 'var(--font-body)' }}>{project.location || 'Mumbai'}</p>
               </div>
               <div>
                 <p className="text-[9px] tracking-[0.22em] uppercase text-[#B59A62] font-semibold mb-1">Year</p>
-                <p className="text-[#F3F1ED]/70 font-light" style={{ fontFamily: 'var(--font-body)' }}>{project.year}</p>
+                <p className="text-[#F3F1ED]/70 font-light" style={{ fontFamily: 'var(--font-body)' }}>{project.year || new Date().getFullYear().toString()}</p>
               </div>
               <div>
                 <p className="text-[9px] tracking-[0.22em] uppercase text-[#B59A62] font-semibold mb-1">Scope</p>
-                <p className="text-[#F3F1ED]/70 font-light" style={{ fontFamily: 'var(--font-body)' }}>{project.scope}</p>
+                <p className="text-[#F3F1ED]/70 font-light" style={{ fontFamily: 'var(--font-body)' }}>{project.scope || 'Custom Interiors'}</p>
               </div>
               <div>
                 <p className="text-[9px] tracking-[0.22em] uppercase text-[#B59A62] font-semibold mb-1">Category</p>
-                <p className="text-[#F3F1ED]/70 font-light" style={{ fontFamily: 'var(--font-body)' }}>{project.category}</p>
+                <p className="text-[#F3F1ED]/70 font-light" style={{ fontFamily: 'var(--font-body)' }}>{project.category || 'Residential'}</p>
               </div>
             </div>
           </div>
 
           {/* Full-width Hero Banner Image */}
-          <div className="img-cover w-full" style={{ height: 'clamp(360px, 55vw, 750px)' }}>
-            <img src={project.heroImage} alt={project.title} />
+          <div className="img-cover w-full bg-black/40" style={{ height: 'clamp(360px, 55vw, 750px)' }}>
+            <img src={heroUrl} alt={project.title} className="w-full h-full object-cover" />
           </div>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
             SECTION 2 — PROJECT INTRODUCTION (THE BRIEF)
-            SECTION 3 — PROJECT DETAILS
             ═══════════════════════════════════════════════════════════════════ */}
         <section className="section-padding" style={{ background: 'var(--color-surface)' }}>
           <div className="container-narrow">
@@ -104,37 +117,38 @@ export default function ProjectDetailPage({ project, nextProject }) {
                 className="text-[1.6rem] sm:text-[2.2rem] lg:text-[2.6rem] font-light leading-snug mb-16"
                 style={{ fontFamily: 'var(--font-display)', color: 'var(--color-ink)' }}
               >
-                {project.intro}
+                {project.intro || `${project.title} is designed with a focus on material warmth, proportion, and enduring craftsmanship.`}
               </p>
             </SectionReveal>
 
-            {/* ═══════════════════════════════════════════════════════════════
-                SECTION 4 — THE CHALLENGE
-                SECTION 5 — THE RESPONSE
-                ═══════════════════════════════════════════════════════════════ */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 pt-12 border-t border-black/10">
-              <SectionReveal direction="left">
-                <h3 className="text-[11px] tracking-[0.26em] uppercase font-semibold text-[#B59A62] mb-4">
-                  THE CHALLENGE
-                </h3>
-                <p className="text-[15px] leading-relaxed font-light text-[#151515]/75" style={{ fontFamily: 'var(--font-body)' }}>
-                  {project.challenge}
-                </p>
-              </SectionReveal>
+            {/* Optional Challenge & Response Details */}
+            {(project.challenge || project.response) && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 pt-12 border-t border-black/10">
+                {project.challenge && (
+                  <SectionReveal direction="left">
+                    <h3 className="text-[11px] tracking-[0.26em] uppercase font-semibold text-[#B59A62] mb-4">
+                      THE CHALLENGE
+                    </h3>
+                    <p className="text-[15px] leading-relaxed font-light text-[#151515]/75" style={{ fontFamily: 'var(--font-body)' }}>
+                      {project.challenge}
+                    </p>
+                  </SectionReveal>
+                )}
 
-              <SectionReveal direction="right">
-                <h3 className="text-[11px] tracking-[0.26em] uppercase font-semibold text-[#B59A62] mb-4">
-                  THE RESPONSE
-                </h3>
-                <p className="text-[15px] leading-relaxed font-light text-[#151515]/75" style={{ fontFamily: 'var(--font-body)' }}>
-                  {project.response}
-                </p>
-              </SectionReveal>
-            </div>
+                {project.response && (
+                  <SectionReveal direction="right">
+                    <h3 className="text-[11px] tracking-[0.26em] uppercase font-semibold text-[#B59A62] mb-4">
+                      THE RESPONSE
+                    </h3>
+                    <p className="text-[15px] leading-relaxed font-light text-[#151515]/75" style={{ fontFamily: 'var(--font-body)' }}>
+                      {project.response}
+                    </p>
+                  </SectionReveal>
+                )}
+              </div>
+            )}
 
-            {/* ═══════════════════════════════════════════════════════════════
-                SECTION 7 — MATERIAL PALETTE / DESIGN DETAILS
-                ═══════════════════════════════════════════════════════════════ */}
+            {/* Material Palette */}
             {project.materials && project.materials.length > 0 && (
               <div className="mt-16 pt-12 border-t border-black/10">
                 <SectionReveal>
@@ -159,43 +173,35 @@ export default function ProjectDetailPage({ project, nextProject }) {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
-            SECTION 6 — IMAGE GALLERY (RESPONSIVE EDITORIAL)
+            SECTION 3 — IMAGE GALLERY (VISUAL NARRATIVE)
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className="section-padding-sm" style={{ background: 'var(--color-bg)' }}>
-          <div className="container-wide">
-            <span className="section-label mb-10 block">Visual Narrative</span>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-              {project.images.map((imgUrl, i) => (
-                <div
-                  key={i}
-                  onClick={() => setSelectedImage(imgUrl)}
-                  className={`img-cover rounded-lg cursor-pointer ${
-                    i === 0 ? 'md:col-span-2 ratio-16-9' : 'ratio-4-3'
-                  }`}
-                >
-                  <img src={imgUrl} alt={`${project.title} image ${i + 1}`} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════════════════════
-            SECTION 8 — FULL-WIDTH FEATURE VISUAL
-            ═══════════════════════════════════════════════════════════════════ */}
-        {project.images.length > 1 && (
-          <section className="w-full relative py-0">
-            <div className="img-cover w-full" style={{ height: 'clamp(380px, 50vw, 700px)' }}>
-              <img
-                src={project.images[1] || project.coverImage}
-                alt={`${project.title} feature visual`}
-              />
+        {galleryImages.length > 0 && (
+          <section className="section-padding-sm" style={{ background: 'var(--color-bg)' }}>
+            <div className="container-wide">
+              <span className="section-label mb-10 block text-[#B59A62]">Visual Narrative</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                {galleryImages.map((imgUrl, i) => (
+                  <div
+                    key={i}
+                    onClick={() => setSelectedImage(imgUrl)}
+                    className={`img-cover rounded-lg cursor-pointer overflow-hidden ${
+                      i === 0 ? 'md:col-span-2 ratio-16-9' : 'ratio-4-3'
+                    }`}
+                  >
+                    <img
+                      src={imgUrl}
+                      alt={`${project.title} view ${i + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════
-            SECTION 9 — NEXT PROJECT NAVIGATION
+            SECTION 4 — NEXT PROJECT NAVIGATION
             ═══════════════════════════════════════════════════════════════════ */}
         {nextProject && (
           <section className="section-padding" style={{ background: 'var(--color-surface)' }}>
@@ -205,7 +211,7 @@ export default function ProjectDetailPage({ project, nextProject }) {
                   <span className="text-[10px] tracking-[0.26em] uppercase font-semibold text-[#B59A62] block mb-2">
                     NEXT PROJECT →
                   </span>
-                  <Link href={`/projects/${nextProject.slug}`} className="group">
+                  <Link href={`/projects/${nextProject.slug || nextProject._id}`} className="group">
                     <h3
                       className="text-2xl sm:text-4xl font-light text-[#151515] group-hover:text-[#B59A62] transition-colors"
                       style={{ fontFamily: 'var(--font-display)' }}
@@ -215,7 +221,7 @@ export default function ProjectDetailPage({ project, nextProject }) {
                   </Link>
                 </div>
                 <Link
-                  href={`/projects/${nextProject.slug}`}
+                  href={`/projects/${nextProject.slug || nextProject._id}`}
                   className="arrow-btn text-[#151515] min-h-[44px] inline-flex items-center"
                 >
                   View Case Study
@@ -229,7 +235,7 @@ export default function ProjectDetailPage({ project, nextProject }) {
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════
-            SECTION 10 — FINAL PROJECT ENQUIRY CTA
+            SECTION 5 — FINAL PROJECT ENQUIRY CTA
             ═══════════════════════════════════════════════════════════════════ */}
         <section className="section-padding text-center" style={{ background: 'var(--color-bg)' }}>
           <div className="container-narrow">
@@ -244,7 +250,7 @@ export default function ProjectDetailPage({ project, nextProject }) {
                 className="inline-flex items-center justify-center min-h-[44px] px-8 py-4 rounded-full text-[10.5px] tracking-[0.24em] uppercase font-semibold transition-all hover:-translate-y-px"
                 style={{ background: 'var(--color-gold)', color: '#111111' }}
               >
-                Start a Conversation
+                Schedule Consultation
               </Link>
               <Link
                 href="/projects"
@@ -280,22 +286,64 @@ export default function ProjectDetailPage({ project, nextProject }) {
   );
 }
 
-export async function getStaticPaths() {
-  const paths = PROJECTS.map((project) => ({
-    params: { slug: project.slug },
-  }));
-  return { paths, fallback: false };
-}
+export async function getServerSideProps({ params }) {
+  const backend = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+  try {
+    const slugParam = encodeURIComponent(params.slug);
+    const res = await axios.get(`${backend}/gallery/${slugParam}`);
+    const doc = res.data;
 
-export async function getStaticProps({ params }) {
-  const project = getProjectBySlug(params.slug);
-  const related = getRelatedProjects(params.slug, 1);
-  const nextProject = related[0] || null;
+    let nextProject = null;
+    try {
+      const allRes = await axios.get(`${backend}/gallery`);
+      const list = allRes.data || [];
+      const idx = list.findIndex(
+        (p) => p.slug === params.slug || p._id === params.slug
+      );
+      if (idx !== -1 && list.length > 1) {
+        const next = list[(idx + 1) % list.length];
+        nextProject = {
+          _id: next._id,
+          slug: next.slug || next._id,
+          title: next.title,
+        };
+      }
+    } catch {}
 
-  return {
-    props: {
-      project,
-      nextProject,
-    },
-  };
+    return {
+      props: {
+        project: doc
+          ? {
+              _id: doc._id,
+              slug: doc.slug || doc._id,
+              title: doc.title,
+              category: doc.category
+                ? doc.category.charAt(0).toUpperCase() + doc.category.slice(1)
+                : '',
+              location: doc.location || 'Mumbai',
+              year: doc.year || '',
+              scope: doc.scope || '',
+              intro: doc.description || '',
+              coverImage: doc.imageUrl || '',
+              heroImage: doc.heroImage || doc.imageUrl || '',
+              images:
+                Array.isArray(doc.images) && doc.images.length > 0
+                  ? doc.images
+                  : [doc.imageUrl].filter(Boolean),
+              materials: Array.isArray(doc.materials) ? doc.materials : [],
+              challenge: doc.challenge || '',
+              response: doc.response || '',
+            }
+          : null,
+        nextProject,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        project: null,
+        nextProject: null,
+      },
+    };
+  }
 }

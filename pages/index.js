@@ -4,8 +4,7 @@ import axios from 'axios';
 import SEO from '../components/SEO';
 import SectionReveal from '../components/SectionReveal';
 import ProjectCard from '../components/ProjectCard';
-import { API, BACKEND } from '../lib/api';
-import { PROJECTS } from '../data/projects';
+import { API, BACKEND, resolveImageSrc } from '../lib/api';
 
 const DEFAULT_SLIDES = [
   {
@@ -139,42 +138,28 @@ const PROCESS_STEPS = [
   },
 ];
 
-export default function HomePage() {
-  const [heroSlides, setHeroSlides] = useState([]);
+export default function HomePage({
+  initialProjects = [],
+  initialHeroSlides = [],
+  initialTestimonials = null,
+}) {
+  const [heroSlides, setHeroSlides] = useState(initialHeroSlides);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [testimonials, setTestimonials] = useState(DEFAULT_TESTIMONIALS);
+  const [testimonials, setTestimonials] = useState(initialTestimonials || DEFAULT_TESTIMONIALS);
+  const [projects, setProjects] = useState(initialProjects);
+  const [projectsLoading, setProjectsLoading] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [activeService, setActiveService] = useState(0);
   const [consultModalOpen, setConsultModalOpen] = useState(false);
 
-  // Fetch Hero and Testimonials from API with safety fallback
-  useEffect(() => {
-    axios
-      .get(`${API}/hero`)
-      .then((res) => {
-        if (res.data && res.data.length > 0) {
-          const formatted = res.data.map((s) => ({
-            imageUrl: s.imageUrl.startsWith('/uploads')
-              ? `${BACKEND}${s.imageUrl}`
-              : s.imageUrl,
-            alt: s.alt || 'SK Interior',
-          }));
-          setHeroSlides(formatted);
-        }
-      })
-      .catch(() => {});
-
-    axios
-      .get(`${API}/testimonials`)
-      .then((res) => {
-        if (res.data && res.data.length > 0) {
-          setTestimonials(res.data);
-        }
-      })
-      .catch(() => {});
-  }, []);
-
   const slides = heroSlides.length ? heroSlides : DEFAULT_SLIDES;
+
+  // Selected works: prioritize featured projects, fallback to latest projects in DB
+  const featuredProjects = projects.filter((p) => p.featured);
+  const displayedProjects =
+    featuredProjects.length > 0
+      ? featuredProjects.slice(0, 3)
+      : projects.slice(0, 3);
 
   // Auto-advance hero slides
   useEffect(() => {
@@ -389,69 +374,115 @@ export default function HomePage() {
               </SectionReveal>
             </div>
 
-            {/* 3 Major Editorial Project Features */}
-            <div className="space-y-20">
-              {PROJECTS.slice(0, 3).map((project, idx) => (
-                <SectionReveal key={project.slug} delay={idx * 100}>
-                  <Link href={`/projects/${project.slug}`} className="group block">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                      
-                      {/* Image Column - Alternating width layout */}
-                      <div className={`lg:col-span-8 ${idx % 2 === 1 ? 'lg:order-2' : ''}`}>
-                        <div className="img-cover ratio-16-9 rounded-xl">
-                          <img src={project.coverImage} alt={project.title} />
-                        </div>
-                      </div>
-
-                      {/* Info Column */}
-                      <div className={`lg:col-span-4 ${idx % 2 === 1 ? 'lg:order-1' : ''}`}>
-                        <div className="flex items-center gap-4 mb-4">
-                          <span
-                            className="text-[#B59A62] text-xl font-light"
-                            style={{ fontFamily: 'var(--font-display)' }}
-                          >
-                            {project.number}
-                          </span>
-                          <span className="text-white/20">•</span>
-                          <span className="text-[10px] tracking-[0.24em] uppercase font-semibold text-[#B59A62]">
-                            {project.category}
-                          </span>
-                        </div>
-
-                        <h3
-                          className="text-[2.2rem] sm:text-[2.8rem] font-light text-[#F3F1ED] group-hover:text-[#B59A62] transition-colors duration-300 leading-tight mb-4"
-                          style={{ fontFamily: 'var(--font-display)' }}
-                        >
-                          {project.title}
-                        </h3>
-
-                        <p
-                          className="text-xs tracking-wider uppercase text-[#F3F1ED]/40 font-light mb-6"
-                          style={{ fontFamily: 'var(--font-body)' }}
-                        >
-                          {project.location} · {project.year}
-                        </p>
-
-                        <p
-                          className="text-sm leading-relaxed text-[#F3F1ED]/60 font-light line-clamp-3 mb-8"
-                          style={{ fontFamily: 'var(--font-body)' }}
-                        >
-                          {project.intro}
-                        </p>
-
-                        <span className="arrow-btn text-[#F3F1ED] group-hover:text-[#B59A62] transition-colors">
-                          Explore Case Study
-                          <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                            <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </span>
-                      </div>
-
+            {/* Editorial Project Features from Database */}
+            {projectsLoading ? (
+              <div className="space-y-16">
+                {[1, 2].map((n) => (
+                  <div key={n} className="animate-pulse grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div className="lg:col-span-8 bg-white/5 rounded-xl aspect-[16/9]" />
+                    <div className="lg:col-span-4 space-y-4">
+                      <div className="h-4 bg-white/10 rounded w-1/4" />
+                      <div className="h-8 bg-white/10 rounded w-3/4" />
+                      <div className="h-4 bg-white/10 rounded w-1/2" />
+                      <div className="h-16 bg-white/10 rounded w-full" />
                     </div>
-                  </Link>
-                </SectionReveal>
-              ))}
-            </div>
+                  </div>
+                ))}
+              </div>
+            ) : displayedProjects.length === 0 ? (
+              <div className="text-center py-20 bg-white/[0.03] border border-white/10 rounded-2xl p-8 max-w-lg mx-auto">
+                <p className="text-sm font-light text-[#F3F1ED]/60 mb-6">
+                  No projects published yet. Check our complete portfolio or reach out for inquiries.
+                </p>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[11px] tracking-[0.2em] uppercase font-semibold bg-[#B59A62] text-[#111111]"
+                >
+                  Contact Studio
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-20">
+                {displayedProjects.map((project, idx) => {
+                  const slugOrId = project.slug || project._id;
+                  const cover = resolveImageSrc(project.imageUrl);
+                  const projectNum = String(idx + 1).padStart(2, '0');
+                  const category = project.category
+                    ? project.category.charAt(0).toUpperCase() + project.category.slice(1)
+                    : 'Portfolio';
+                  const metaString = [project.location, project.year].filter(Boolean).join(' · ');
+
+                  return (
+                    <SectionReveal key={project._id || project.slug} delay={idx * 100}>
+                      <Link href={`/projects/${slugOrId}`} className="group block">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                          
+                          {/* Image Column - Alternating width layout */}
+                          <div className={`lg:col-span-8 ${idx % 2 === 1 ? 'lg:order-2' : ''}`}>
+                            <div className="img-cover ratio-16-9 rounded-xl overflow-hidden bg-black/40">
+                              <img
+                                src={cover}
+                                alt={project.title}
+                                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Info Column */}
+                          <div className={`lg:col-span-4 ${idx % 2 === 1 ? 'lg:order-1' : ''}`}>
+                            <div className="flex items-center gap-4 mb-4">
+                              <span
+                                className="text-[#B59A62] text-xl font-light"
+                                style={{ fontFamily: 'var(--font-display)' }}
+                              >
+                                {projectNum}
+                              </span>
+                              <span className="text-white/20">•</span>
+                              <span className="text-[10px] tracking-[0.24em] uppercase font-semibold text-[#B59A62]">
+                                {category}
+                              </span>
+                            </div>
+
+                            <h3
+                              className="text-[2.2rem] sm:text-[2.8rem] font-light text-[#F3F1ED] group-hover:text-[#B59A62] transition-colors duration-300 leading-tight mb-4"
+                              style={{ fontFamily: 'var(--font-display)' }}
+                            >
+                              {project.title}
+                            </h3>
+
+                            {metaString && (
+                              <p
+                                className="text-xs tracking-wider uppercase text-[#F3F1ED]/40 font-light mb-6"
+                                style={{ fontFamily: 'var(--font-body)' }}
+                              >
+                                {metaString}
+                              </p>
+                            )}
+
+                            {project.description && (
+                              <p
+                                className="text-sm leading-relaxed text-[#F3F1ED]/60 font-light line-clamp-3 mb-8"
+                                style={{ fontFamily: 'var(--font-body)' }}
+                              >
+                                {project.description}
+                              </p>
+                            )}
+
+                            <span className="arrow-btn text-[#F3F1ED] group-hover:text-[#B59A62] transition-colors">
+                              Explore Case Study
+                              <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                                <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            </span>
+                          </div>
+
+                        </div>
+                      </Link>
+                    </SectionReveal>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </section>
 
@@ -797,4 +828,46 @@ export default function HomePage() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const backend = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+
+  let initialProjects = [];
+  let initialHeroSlides = [];
+  let initialTestimonials = null;
+
+  try {
+    const [pRes, hRes, tRes] = await Promise.allSettled([
+      axios.get(`${backend}/gallery`),
+      axios.get(`${backend}/hero`),
+      axios.get(`${backend}/testimonials`),
+    ]);
+
+    if (pRes.status === 'fulfilled' && Array.isArray(pRes.value.data)) {
+      initialProjects = pRes.value.data;
+    }
+
+    if (hRes.status === 'fulfilled' && Array.isArray(hRes.value.data) && hRes.value.data.length > 0) {
+      initialHeroSlides = hRes.value.data.map((s) => ({
+        imageUrl: s.imageUrl?.startsWith('/uploads') ? `${backendUrl}${s.imageUrl}` : s.imageUrl,
+        alt: s.alt || 'SK Interior',
+      }));
+    }
+
+    if (tRes.status === 'fulfilled' && Array.isArray(tRes.value.data) && tRes.value.data.length > 0) {
+      initialTestimonials = tRes.value.data;
+    }
+  } catch (err) {
+    console.error('Error in HomePage getServerSideProps:', err);
+  }
+
+  return {
+    props: {
+      initialProjects,
+      initialHeroSlides,
+      initialTestimonials,
+    },
+  };
 }

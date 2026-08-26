@@ -5,6 +5,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'picsum.photos' },
       { protocol: 'http', hostname: 'localhost' },
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
     ],
   },
   async rewrites() {
@@ -13,6 +14,10 @@ const nextConfig = {
       {
         source: '/api/:path*',
         destination: `${backend}/api/:path*`,
+      },
+      {
+        source: '/uploads/:path*',
+        destination: `${backend}/uploads/:path*`,
       },
     ];
   },
