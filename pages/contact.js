@@ -7,20 +7,20 @@ import { API } from '../lib/api';
 
 const STUDIO_DETAILS = {
   name: 'SK Interior Design Studio',
-  addressLine1: '25-B, New Kantwadi Road',
-  addressLine2: 'Santacruz West',
-  cityStateZip: 'Mumbai, Maharashtra 400054',
+  addressLine1: '1012, Commercial Tower',
+  addressLine2: 'Near Trade Centre, BKC',
+  cityStateZip: 'Mumbai, Maharashtra',
   phones: [
     { number: '+91 98707 60240', href: 'tel:9870760240' },
     { number: '+91 91674 01020', href: 'tel:9167401020' },
   ],
-  email: 'hello@skinterior.in',
+  email: 'skinteriordesigner90@gmail.com',
   hours: 'Monday – Saturday · 10:00 AM – 7:00 PM',
   appointmentNote: 'Consultations by appointment only.',
   whatsappUrl:
     'https://wa.me/919870760240?text=Hi%20SK%20Interior%2C%20I%27m%20interested%20in%20discussing%20an%20interior%20project.',
   googleMapsUrl:
-    'https://maps.google.com/?q=Santacruz+West+Mumbai',
+    'https://maps.google.com/?q=1012+Commercial+Tower+Near+Trade+Centre+BKC+Mumbai',
 };
 
 const NEXT_STEPS = [
@@ -149,7 +149,7 @@ export default function ContactPage() {
     <>
       <SEO
         title="Start a Project — Contact Studio"
-        description="Get in touch with SK Interior. Visit our studio in Santacruz, Mumbai or send us your project details to begin your spatial architecture journey."
+        description="Get in touch with SK Interior. Visit our studio in BKC, Mumbai or send us your project details to begin your spatial architecture journey."
         canonical="/contact"
       />
 
@@ -663,7 +663,7 @@ export default function ContactPage() {
                     className="text-[14.5px] sm:text-[15.5px] leading-relaxed text-[#151515]/75 font-light mb-8 max-w-lg"
                     style={{ fontFamily: 'var(--font-body)' }}
                   >
-                    Located in Pali Hill, Bandra West, our studio space hosts material consultations, 3D project reviews, and initial design discovery meetings by appointment.
+                    Located in 1012 Commercial Tower, near Trade Centre, BKC, our studio space hosts material consultations, 3D project reviews, and initial design discovery meetings by appointment.
                   </p>
 
                   <div className="space-y-4 mb-8">
@@ -696,14 +696,14 @@ export default function ContactPage() {
                   <div className="relative rounded-3xl overflow-hidden aspect-[4/3] w-full border border-[#151515]/10 shadow-xl group">
                     <img
                       src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=80"
-                      alt="SK Interior Santacruz Studio entrance"
+                      alt="SK Interior BKC Studio entrance"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/70 via-transparent to-transparent" />
                     <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end text-white">
                       <div>
                         <span className="text-[9px] tracking-[0.26em] uppercase font-semibold text-[#B59A62] block">
-                          SANTACRUZ, MUMBAI
+                          BKC, MUMBAI
                         </span>
                         <p className="text-xs font-light opacity-80">
                           By Appointment · Monday – Saturday

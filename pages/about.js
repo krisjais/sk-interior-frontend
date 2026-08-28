@@ -54,7 +54,7 @@ const TEAM_MEMBERS = [
 ];
 
 const STUDIO_FACTS = [
-  { label: 'Based In', value: 'Santacruz, Mumbai' },
+  { label: 'Based In', value: 'BKC, Mumbai' },
   { label: 'Practice Areas', value: 'Residential · Commercial · Hospitality' },
   { label: 'Design Approach', value: 'Bespoke Interior Architecture' },
   { label: 'Project Scope', value: 'Turnkey Delivery & Material Advisory' },
@@ -65,7 +65,7 @@ export default function AboutPage() {
     <>
       <SEO
         title="About Studio — Our Philosophy & Approach"
-        description="SK Interior is a luxury interior architecture practice in Santacruz, Mumbai. Learn about our studio story, design principles, and approach."
+        description="SK Interior is a luxury interior architecture practice in BKC, Mumbai. Learn about our studio story, design principles, and approach."
         canonical="/about"
       />
 
@@ -100,7 +100,7 @@ export default function AboutPage() {
                   className="text-[14.5px] sm:text-[16px] leading-relaxed text-[#F3F1ED]/60 font-light max-w-lg"
                   style={{ fontFamily: 'var(--font-body)' }}
                 >
-                  SK Interior was established in Santacruz, Mumbai as an interior architecture studio dedicated to spatial restraint, authentic materials, and long-term thinking.
+                  SK Interior was established in BKC, Mumbai as an interior architecture studio dedicated to spatial restraint, authentic materials, and long-term thinking.
                 </p>
               </div>
             </div>

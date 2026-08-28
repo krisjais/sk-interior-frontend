@@ -173,7 +173,7 @@ export default function HomePage({
     <>
       <SEO
         title="Luxury Interior Design Studio, Mumbai"
-        description="SK Interior is a premium interior design and architecture studio in Santacruz, Mumbai. Specialising in residential, commercial, and hospitality interiors."
+        description="SK Interior is a premium interior design and architecture studio in BKC, Mumbai. Specialising in residential, commercial, and hospitality interiors."
         canonical="/"
       />
 
@@ -209,7 +209,7 @@ export default function HomePage({
           <div className="container-wide relative z-10 pb-16 lg:pb-20 pt-32 sm:pt-36 lg:pt-40 w-full">
             <div className="max-w-4xl">
               <span className="section-label text-[#B59A62] mb-6 block">
-                Santacruz · Mumbai
+                BKC · Mumbai
               </span>
 
               {/* Large Editorial Headline */}
@@ -333,7 +333,7 @@ export default function HomePage({
                   {/* Subtle decorative badge */}
                   <div className="absolute -bottom-6 -left-6 bg-[#111111] text-[#F3F1ED] p-6 rounded-lg hidden sm:block shadow-strong">
                     <p className="text-[9px] tracking-[0.26em] uppercase text-[#B59A62] font-semibold mb-1">
-                      Santacruz Studio
+                      BKC Studio
                     </p>
                     <p className="text-xs font-light text-[#F3F1ED]/70" style={{ fontFamily: 'var(--font-body)' }}>
                       Est. 2015 · Mumbai
