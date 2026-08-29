@@ -32,7 +32,10 @@ export default function ProjectDetailPage({ project, nextProject }) {
 
   const coverUrl = resolveImageSrc(project.coverImage);
   const heroUrl = resolveImageSrc(project.heroImage || project.coverImage);
-  const galleryImages = (project.images || []).map(img => resolveImageSrc(img)).filter(Boolean);
+  const rawGallery = (project.images || []).map(img => resolveImageSrc(img)).filter(Boolean);
+  // Separate additional gallery images from the hero image
+  const galleryImages = rawGallery.filter(img => img !== heroUrl);
+  const displayGallery = galleryImages.length > 0 ? galleryImages : (rawGallery.length > 1 ? rawGallery.slice(1) : []);
 
   return (
     <>
@@ -45,13 +48,13 @@ export default function ProjectDetailPage({ project, nextProject }) {
 
       <main className="overflow-x-hidden">
         {/* ═══════════════════════════════════════════════════════════════════
-            SECTION 1 — CINEMATIC PROJECT HERO
+            SECTION 1 — CINEMATIC PROJECT HERO & FEATURED FRAME
             ═══════════════════════════════════════════════════════════════════ */}
         <section
-          className="relative min-h-[70vh] flex flex-col justify-end"
-          style={{ background: 'var(--color-bg)', paddingTop: '130px' }}
+          className="relative pt-32 sm:pt-36 lg:pt-40 pb-16 lg:pb-24"
+          style={{ background: 'var(--color-bg)' }}
         >
-          <div className="container-wide section-padding-sm">
+          <div className="container-wide">
             {/* Breadcrumb & Category */}
             <div className="flex items-center gap-3 mb-6">
               <Link
@@ -80,7 +83,7 @@ export default function ProjectDetailPage({ project, nextProject }) {
             </div>
 
             {/* Metadata Bar */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/10 text-[13px]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 pb-12 border-t border-white/10 text-[13px]">
               <div>
                 <p className="text-[9px] tracking-[0.22em] uppercase text-[#B59A62] font-semibold mb-1">Location</p>
                 <p className="text-[#F3F1ED]/70 font-light" style={{ fontFamily: 'var(--font-body)' }}>{project.location || 'Mumbai'}</p>
@@ -98,11 +101,35 @@ export default function ProjectDetailPage({ project, nextProject }) {
                 <p className="text-[#F3F1ED]/70 font-light" style={{ fontFamily: 'var(--font-body)' }}>{project.category || 'Residential'}</p>
               </div>
             </div>
-          </div>
 
-          {/* Full-width Hero Banner Image */}
-          <div className="img-cover w-full bg-black/40" style={{ height: 'clamp(360px, 55vw, 750px)' }}>
-            <img src={heroUrl} alt={project.title} className="w-full h-full object-cover" />
+            {/* Contained & Proportionate Featured Project Photo Showcase */}
+            {heroUrl && (
+              <div className="mt-4 max-w-5xl mx-auto">
+                <div
+                  onClick={() => setSelectedImage(heroUrl)}
+                  className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-[#161616] cursor-pointer group"
+                >
+                  <div className="aspect-[16/10] sm:aspect-[16/9] max-h-[560px] w-full flex items-center justify-center overflow-hidden">
+                    <img
+                      src={heroUrl}
+                      alt={project.title}
+                      className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-6 sm:p-8">
+                    <span className="text-[#F3F1ED] text-[10px] tracking-[0.22em] uppercase font-semibold flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full border border-white/15">
+                      <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      Click to expand full image
+                    </span>
+                    <span className="text-[#B59A62] text-[10px] tracking-[0.22em] uppercase font-semibold hidden sm:inline-block">
+                      Featured Commission View
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
@@ -175,24 +202,30 @@ export default function ProjectDetailPage({ project, nextProject }) {
         {/* ═══════════════════════════════════════════════════════════════════
             SECTION 3 — IMAGE GALLERY (VISUAL NARRATIVE)
             ═══════════════════════════════════════════════════════════════════ */}
-        {galleryImages.length > 0 && (
+        {displayGallery.length > 0 && (
           <section className="section-padding-sm" style={{ background: 'var(--color-bg)' }}>
             <div className="container-wide">
               <span className="section-label mb-10 block text-[#B59A62]">Visual Narrative</span>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                {galleryImages.map((imgUrl, i) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+                {displayGallery.map((imgUrl, i) => (
                   <div
                     key={i}
                     onClick={() => setSelectedImage(imgUrl)}
-                    className={`img-cover rounded-lg cursor-pointer overflow-hidden ${
-                      i === 0 ? 'md:col-span-2 ratio-16-9' : 'ratio-4-3'
-                    }`}
+                    className="relative rounded-xl cursor-pointer overflow-hidden border border-white/10 bg-[#161616] group aspect-[4/3] max-h-[380px]"
                   >
                     <img
                       src={imgUrl}
                       alt={`${project.title} view ${i + 1}`}
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                      className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="px-4 py-2 rounded-full bg-black/70 border border-white/20 text-[#F3F1ED] text-[9.5px] tracking-[0.22em] uppercase font-semibold flex items-center gap-2">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        Zoom View
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -266,19 +299,27 @@ export default function ProjectDetailPage({ project, nextProject }) {
         {selectedImage && (
           <div
             onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 z-[99999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
+            className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-8 cursor-pointer"
           >
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute top-6 right-6 text-white/60 hover:text-white text-3xl font-light"
+              className="absolute top-6 right-6 text-white/70 hover:text-white text-2xl font-light w-11 h-11 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all z-20"
             >
-              ×
+              ✕
             </button>
-            <img
-              src={selectedImage}
-              alt="Project detail zoom"
-              className="max-w-full max-h-[90vh] object-contain rounded shadow-strong"
-            />
+            <div
+              className="relative max-w-5xl max-h-[85vh] flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={selectedImage}
+                alt={project.title}
+                className="max-w-full max-h-[82vh] object-contain rounded-xl shadow-2xl border border-white/10"
+              />
+            </div>
+            <p className="mt-4 text-[11px] tracking-[0.24em] uppercase text-[#B59A62] font-semibold">
+              {project.title}
+            </p>
           </div>
         )}
       </main>

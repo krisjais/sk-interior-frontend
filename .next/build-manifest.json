@@ -2,11 +2,11 @@
   "pages": {
     "/": [
       "static/chunks/2nafmxv2sh_1u.js",
-      "static/chunks/3tjsgpp7o_d6t.js",
+      "static/chunks/11mj9vd5uweeg.js",
       "static/chunks/0rlgvf1ti32t8.js",
       "static/chunks/3mbdal7m2vaeq.js",
       "static/chunks/1gen6c6rkyejj.js",
-      "static/chunks/turbopack-1uhotpobfr-d1.js"
+      "static/chunks/turbopack-40e8uexpinvro.js"
     ],
     "/_app": [
       "static/chunks/1hdpa9xh1vq9r.js",
@@ -14,8 +14,8 @@
       "static/chunks/3mbdal7m2vaeq.js",
       "static/chunks/0rlgvf1ti32t8.js",
       "static/chunks/1gen6c6rkyejj.js",
-      "static/chunks/07vbhjcmovfgj.css",
-      "static/chunks/turbopack-0c-dit2lsqmhb.js"
+      "static/chunks/1b7dmmjktbqrg.css",
+      "static/chunks/turbopack-0vv1i1u1x0xy4.js"
     ],
     "/_error": [
       "static/chunks/2li3vjv6rqil7.js",
@@ -26,11 +26,11 @@
     ],
     "/about": [
       "static/chunks/2nafmxv2sh_1u.js",
-      "static/chunks/3y_dby42nywxw.js",
+      "static/chunks/2h7p0fbh0dn_s.js",
       "static/chunks/0rlgvf1ti32t8.js",
       "static/chunks/3mbdal7m2vaeq.js",
       "static/chunks/1gen6c6rkyejj.js",
-      "static/chunks/turbopack-0mhx6p4270ubi.js"
+      "static/chunks/turbopack-0m875hioq_pcl.js"
     ],
     "/admin": [
       "static/chunks/2j40zxol7ckwk.js",
@@ -42,11 +42,11 @@
     "/admin/dashboard": [
       "static/chunks/3ec8ztgpctax0.js",
       "static/chunks/3mbdal7m2vaeq.js",
-      "static/chunks/2qwv8amvcif40.js",
+      "static/chunks/2cw2l_jhab7af.js",
       "static/chunks/0rlgvf1ti32t8.js",
       "static/chunks/3543cnrg2ug47.js",
       "static/chunks/1gen6c6rkyejj.js",
-      "static/chunks/turbopack-3kcle4r8koyt8.js"
+      "static/chunks/turbopack-3j2gbjvmfi_rc.js"
     ],
     "/admin/login": [
       "static/chunks/16cfljt9jrh1j.js",
@@ -100,11 +100,11 @@
     ],
     "/projects/[slug]": [
       "static/chunks/2nafmxv2sh_1u.js",
-      "static/chunks/193mzqdmtev8n.js",
+      "static/chunks/19nr__u3_zh0o.js",
       "static/chunks/0rlgvf1ti32t8.js",
       "static/chunks/3mbdal7m2vaeq.js",
       "static/chunks/1gen6c6rkyejj.js",
-      "static/chunks/turbopack-3qpcuiair1046.js"
+      "static/chunks/turbopack-3xebv2_942fo6.js"
     ],
     "/services": [
       "static/chunks/2nafmxv2sh_1u.js",
@@ -118,9 +118,9 @@
   "devFiles": [],
   "polyfillFiles": [],
   "lowPriorityFiles": [
-    "static/dqpSGZ4js3W1sRKR1iMY9/_buildManifest.js",
-    "static/dqpSGZ4js3W1sRKR1iMY9/_ssgManifest.js",
-    "static/dqpSGZ4js3W1sRKR1iMY9/_clientMiddlewareManifest.js"
+    "static/m8ldr5uAjUkIk1YwgIUZV/_buildManifest.js",
+    "static/m8ldr5uAjUkIk1YwgIUZV/_ssgManifest.js",
+    "static/m8ldr5uAjUkIk1YwgIUZV/_clientMiddlewareManifest.js"
   ],
   "rootMainFiles": [],
   "rootMainFilesTree": {},

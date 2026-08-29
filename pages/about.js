@@ -35,24 +35,6 @@ const DESIGN_PRINCIPLES = [
   },
 ];
 
-const TEAM_MEMBERS = [
-  {
-    name: 'Simran Kapoor',
-    role: 'Principal Designer & Founder',
-    bio: 'Leads spatial design direction and material philosophy across all residential and hospitality commissions.',
-  },
-  {
-    name: 'Rohit Shenoy',
-    role: 'Head of Project Delivery',
-    bio: 'Oversees site execution, technical drawings, and craftsman coordination across active sites in Mumbai.',
-  },
-  {
-    name: 'Anika Mehta',
-    role: 'Senior Interior Architect',
-    bio: 'Specialises in custom joinery detail, stone specification, and lighting plans.',
-  },
-];
-
 const STUDIO_FACTS = [
   { label: 'Based In', value: 'BKC, Mumbai' },
   { label: 'Practice Areas', value: 'Residential · Commercial · Hospitality' },
@@ -317,51 +299,11 @@ export default function AboutPage() {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
-            SECTION 6 — STUDIO PRACTICE & ROLES (CLEAN TYPOGRAPHIC EDITORIAL)
-            SECTION 7 — STUDIO DETAILS
+            SECTION 6 — STUDIO DETAILS
             ═══════════════════════════════════════════════════════════════════ */}
         <section className="section-padding" style={{ background: 'var(--color-surface)' }}>
           <div className="container-wide">
-            {/* Team Header */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 pb-8 border-b border-black/10">
-              <SectionReveal>
-                <span className="section-label mb-3 block">STUDIO PRACTICE</span>
-                <h2 className="display-lg text-[#151515]">
-                  Behind the<br />
-                  <span className="text-italic-serif text-[#B59A62]">Process.</span>
-                </h2>
-              </SectionReveal>
-            </div>
-
-            {/* Editorial Typographic Cards (No Headshots/People Images) */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-20">
-              {TEAM_MEMBERS.map((member, idx) => (
-                <SectionReveal key={member.name} delay={idx * 80}>
-                  <div className="p-8 rounded-xl bg-white/60 border border-black/10 shadow-sm flex flex-col justify-between min-h-[220px]">
-                    <div>
-                      <span className="text-[10px] tracking-[0.24em] uppercase font-semibold text-[#B59A62] block mb-3">
-                        0{idx + 1} — {member.role}
-                      </span>
-                      <h3
-                        className="text-[1.5rem] font-light text-[#151515] mb-4"
-                        style={{ fontFamily: 'var(--font-display)' }}
-                      >
-                        {member.name}
-                      </h3>
-                      <p
-                        className="text-[13.5px] leading-relaxed text-[#6F6B65] font-light"
-                        style={{ fontFamily: 'var(--font-body)' }}
-                      >
-                        {member.bio}
-                      </p>
-                    </div>
-                  </div>
-                </SectionReveal>
-              ))}
-            </div>
-
-            {/* Section 7 — Verified Studio Details Bar */}
-            <div className="pt-12 border-t border-black/15">
+            <SectionReveal>
               <span className="section-label mb-8 block">STUDIO OVERVIEW</span>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-[13px]">
                 {STUDIO_FACTS.map((fact) => (
@@ -375,7 +317,7 @@ export default function AboutPage() {
                   </div>
                 ))}
               </div>
-            </div>
+            </SectionReveal>
           </div>
         </section>
 

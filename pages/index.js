@@ -717,58 +717,63 @@ export default function HomePage({
         {/* ═══════════════════════════════════════════════════════════════════
             SECTION 7 — FEATURED TESTIMONIAL (EDITORIAL SINGLE FEATURE)
             ═══════════════════════════════════════════════════════════════════ */}
-        <section className="section-padding" style={{ background: 'var(--color-bg)' }}>
-          <div className="container-narrow">
-            <SectionReveal>
-              <span className="section-label mb-8 block justify-center">Client Voice</span>
+        {testimonials && testimonials.length > 0 && (
+          <section className="section-padding" style={{ background: 'var(--color-bg)' }}>
+            <div className="container-narrow">
+              <SectionReveal>
+                <span className="section-label mb-8 block justify-center">Client Voice</span>
 
-              <div className="text-center relative">
-                {/* Large Quotation Mark */}
-                <span
-                  className="block text-[#B59A62]/20 leading-none select-none -mb-12"
-                  style={{ fontFamily: 'var(--font-display)', fontSize: '10rem' }}
-                >
-                  &ldquo;
-                </span>
+                <div className="text-center relative">
+                  {/* Large Quotation Mark */}
+                  <span
+                    className="block text-[#B59A62]/20 leading-none select-none -mb-12"
+                    style={{ fontFamily: 'var(--font-display)', fontSize: '10rem' }}
+                  >
+                    &ldquo;
+                  </span>
 
-                {/* Main Quote Statement */}
-                <p
-                  className="display-md font-light text-[#F3F1ED] leading-snug mb-10"
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  {testimonials[activeTestimonial].text}
-                </p>
-
-                {/* Client Metadata */}
-                <div>
-                  <h4 className="text-base text-[#F3F1ED] font-medium" style={{ fontFamily: 'var(--font-body)' }}>
-                    {testimonials[activeTestimonial].name}
-                  </h4>
-                  <p className="text-xs text-[#B59A62] font-light mt-1">
-                    {testimonials[activeTestimonial].loc} {testimonials[activeTestimonial].project ? `· ${testimonials[activeTestimonial].project}` : ''}
+                  {/* Main Quote Statement */}
+                  <p
+                    className="display-md font-light text-[#F3F1ED] leading-snug mb-10"
+                    style={{ fontFamily: 'var(--font-display)' }}
+                  >
+                    {(testimonials[activeTestimonial] || testimonials[0])?.text}
                   </p>
-                </div>
 
-                {/* Switcher Controls */}
-                {testimonials.length > 1 && (
-                  <div className="flex items-center justify-center gap-3 mt-10">
-                    {testimonials.map((_, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        aria-label={`View testimonial ${i + 1}`}
-                        onClick={() => setActiveTestimonial(i)}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${
-                          i === activeTestimonial ? 'w-8 bg-[#B59A62]' : 'w-2 bg-white/20'
-                        }`}
-                      />
-                    ))}
+                  {/* Client Metadata */}
+                  <div>
+                    <h4 className="text-base text-[#F3F1ED] font-medium" style={{ fontFamily: 'var(--font-body)' }}>
+                      {(testimonials[activeTestimonial] || testimonials[0])?.name}
+                    </h4>
+                    <p className="text-xs text-[#B59A62] font-light mt-1">
+                      {(testimonials[activeTestimonial] || testimonials[0])?.loc}{' '}
+                      {(testimonials[activeTestimonial] || testimonials[0])?.project
+                        ? `· ${(testimonials[activeTestimonial] || testimonials[0])?.project}`
+                        : ''}
+                    </p>
                   </div>
-                )}
-              </div>
-            </SectionReveal>
-          </div>
-        </section>
+
+                  {/* Switcher Controls */}
+                  {testimonials.length > 1 && (
+                    <div className="flex items-center justify-center gap-3 mt-10">
+                      {testimonials.map((_, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          aria-label={`View testimonial ${i + 1}`}
+                          onClick={() => setActiveTestimonial(i)}
+                          className={`h-1.5 rounded-full transition-all duration-300 ${
+                            i === activeTestimonial ? 'w-8 bg-[#B59A62]' : 'w-2 bg-white/20'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </SectionReveal>
+            </div>
+          </section>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════════════
             SECTION 8 — FINAL PROJECT CTA (DRAMATIC EDITORIAL)
