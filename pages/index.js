@@ -7,6 +7,7 @@ import MagneticBtn from '../components/MagneticBtn';
 import SafeImage from '../components/SafeImage';
 import ProjectCard from '../components/ProjectCard';
 import useParallax from '../lib/useParallax';
+import CostGuideSection from '../components/CostGuideSection';
 import { API, BACKEND, HERO_FALLBACK_IMAGE, resolveImageSrc } from '../lib/api';
 import { PROJECTS } from '../data/projects';
 
@@ -1001,6 +1002,11 @@ export default function HomePage({
             </div>
           </div>
         </section>
+
+        {/* ═══════════════════════════════════════════════════════════════════
+            SECTION — INTERIOR DESIGN COST GUIDE
+            ═══════════════════════════════════════════════════════════════════ */}
+        <CostGuideSection />
 
         {/* ═══════════════════════════════════════════════════════════════════
             SECTION 7 — CLIENT VOICE & REVIEWS (UNIQUE LUXURY EDITORIAL)
