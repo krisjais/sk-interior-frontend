@@ -29,8 +29,6 @@ const DEFAULT_SLIDES = [
 const DEFAULT_TESTIMONIALS = [
   {
     name: 'Vikram & Radhika Mehta',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80',
-    avatarInitials: 'VM',
     loc: 'Santacruz West, Mumbai',
     text: 'SK Interior transformed our 3,200 sq ft apartment into a sanctuary of calm. Simran’s eye for material relationships and restraint created a space that feels deeply personal, quiet, and effortlessly luxurious.',
     project: 'The Santacruz Residence',
@@ -39,8 +37,6 @@ const DEFAULT_TESTIMONIALS = [
   },
   {
     name: 'Siddharth Singhania',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=250&q=80',
-    avatarInitials: 'SS',
     loc: 'Worli Sea Face, Mumbai',
     text: 'The altitude penthouse demanded a design that respected the sea view without feeling like a glass showroom. The dark walnut joinery and smoked oak flooring ground the space masterfully.',
     project: 'Altitude Penthouse',
@@ -49,8 +45,6 @@ const DEFAULT_TESTIMONIALS = [
   },
   {
     name: 'Tarun & Meera Grover',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=250&q=80',
-    avatarInitials: 'TG',
     loc: 'Alibaug Coast',
     text: 'Living in our Alibaug villa feels like floating between the interior and the landscape. The marine-grade teak and Kota stone age beautifully under coastal light.',
     project: 'The Sea Villa',
@@ -1046,22 +1040,8 @@ export default function HomePage({
                     &ldquo;{testimonials[activeTestimonial]?.text}&rdquo;
                   </p>
 
-                  {/* Client Profile Avatar & Metadata */}
-                  <div className="mb-8 flex flex-col items-center justify-center">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#B59A62] shadow-xl mb-3 bg-[#222] flex-shrink-0">
-                      {testimonials[activeTestimonial]?.avatar ? (
-                        <img
-                          src={testimonials[activeTestimonial].avatar}
-                          alt={testimonials[activeTestimonial].name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[#B59A62] font-bold text-sm bg-gradient-to-br from-[#1A1917] to-[#2B2822]">
-                          {testimonials[activeTestimonial]?.avatarInitials || 'SK'}
-                        </div>
-                      )}
-                    </div>
-
+                  {/* Client Profile Metadata */}
+                  <div className="mb-8 flex flex-col items-center justify-center text-center">
                     <h4 className="text-lg text-[#F3F1ED] font-normal" style={{ fontFamily: 'var(--font-display)' }}>
                       {testimonials[activeTestimonial]?.name}
                     </h4>

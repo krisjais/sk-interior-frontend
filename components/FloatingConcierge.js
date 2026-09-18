@@ -230,12 +230,12 @@ export default function FloatingConcierge() {
       {isOpen && (
         <div className="fixed inset-0 z-[10000] flex items-end sm:items-end md:items-end sm:justify-end p-0 sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm transition-all duration-300">
           <div
-            className="w-full sm:w-[420px] max-h-[88vh] sm:max-h-[640px] h-full sm:h-auto bg-[#121212] border border-white/15 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden text-[#F3F1ED] animate-in fade-in slide-in-from-bottom-6 duration-300"
+            className="w-full sm:w-[420px] h-[88vh] sm:h-[620px] max-h-[90vh] bg-[#121212] border border-white/15 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden text-[#F3F1ED] animate-in fade-in slide-in-from-bottom-6 duration-300"
             role="dialog"
             aria-label="SK Interior AI Concierge Chat"
           >
             {/* Modal Header */}
-            <div className="p-4 sm:p-5 bg-[#171717] border-b border-white/10 flex items-center justify-between">
+            <div className="p-4 sm:p-5 bg-[#171717] border-b border-white/10 flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#C8A96A] to-[#D4BC8A] text-[#111111] flex items-center justify-center font-bold text-sm tracking-wider shadow-md">
@@ -273,7 +273,7 @@ export default function FloatingConcierge() {
             </div>
 
             {/* Quick Contact Banner inside Chat */}
-            <div className="bg-[#191919] px-4 py-2.5 border-b border-white/5 flex items-center justify-between text-xs text-[#C8A96A]">
+            <div className="bg-[#191919] px-4 py-2.5 border-b border-white/5 flex items-center justify-between text-xs text-[#C8A96A] flex-shrink-0">
               <span className="flex items-center gap-1.5 text-[11px]">
                 <span className="w-2 h-2 rounded-full bg-emerald-400" />
                 Studio line active: 10AM – 7PM
@@ -287,7 +287,7 @@ export default function FloatingConcierge() {
             </div>
 
             {/* Messages Scroll Area */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 text-xs sm:text-sm">
+            <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-5 space-y-4 text-xs sm:text-sm">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
@@ -346,13 +346,16 @@ export default function FloatingConcierge() {
             </div>
 
             {/* Quick Suggestion Chips */}
-            <div className="p-2 sm:px-4 bg-[#151515] border-t border-white/10 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+            <div
+              className="py-2.5 px-3 sm:px-4 bg-[#151515] border-t border-white/10 flex items-center gap-2 overflow-x-auto no-scrollbar flex-shrink-0"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
               {QUICK_SUGGESTIONS.map((item, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => handleSendMessage(item)}
-                  className="whitespace-nowrap px-2.5 py-1 rounded-full text-[11px] bg-white/5 hover:bg-[#C8A96A]/20 border border-white/10 hover:border-[#C8A96A]/50 text-[#F3F1ED]/80 hover:text-[#C8A96A] transition-colors"
+                  className="flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-full text-[11px] bg-white/5 hover:bg-[#C8A96A]/20 border border-white/10 hover:border-[#C8A96A]/50 text-[#F3F1ED]/85 hover:text-[#C8A96A] transition-all active:scale-95"
                 >
                   {item}
                 </button>
@@ -365,7 +368,7 @@ export default function FloatingConcierge() {
                 e.preventDefault();
                 handleSendMessage();
               }}
-              className="p-3 sm:p-4 bg-[#171717] border-t border-white/10 flex items-center gap-2"
+              className="p-3 sm:p-4 bg-[#171717] border-t border-white/10 flex items-center gap-2 flex-shrink-0"
             >
               <input
                 ref={inputRef}

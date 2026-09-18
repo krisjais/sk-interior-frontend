@@ -8,8 +8,8 @@ const PRICING_CARDS = [
     priceUnit: 'Lakh',
     description: 'Smart & Functional Interiors',
     category: 'Essential Spatial Design',
-    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: '1 BHK Modern Compact Interior Design by SK Interior',
+    image: 'https://images.unsplash.com/photo-1618221469555-7f3ad97540d6?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: '1 BHK Modern Compact Interior with Sleek Kitchen and Living by SK Interior',
     highlights: [
       'Compact living & dining optimisation',
       'Modular kitchen & sleek cabinetry',
@@ -24,8 +24,8 @@ const PRICING_CARDS = [
     priceUnit: 'Lakh',
     description: 'Elegant & Comfortable Interiors',
     category: 'Most Popular',
-    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: '2 BHK Elegant Living & Dining Interior by SK Interior',
+    image: 'https://images.unsplash.com/photo-1618219740975-d40978bb7378?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: '2 BHK Elegant Living Room with Architectural Lighting & Veneer Panelling by SK Interior',
     highlights: [
       'Living, dining & 2 bedroom curation',
       'Premium veneer joinery & wall panelling',
@@ -40,8 +40,8 @@ const PRICING_CARDS = [
     priceUnit: 'Lakh',
     description: 'Premium & Luxury Interiors',
     category: 'Full Residence Curation',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: '3 BHK Penthouse & Luxury Interior Design by SK Interior',
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: '3 BHK Luxury Living Residence with Wood Feature Wall and Marble Accents by SK Interior',
     highlights: [
       'Expansive living & full 3 bedroom suite',
       'Italian marble & artisan metalwork',
